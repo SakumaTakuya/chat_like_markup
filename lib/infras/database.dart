@@ -2,30 +2,40 @@ import 'package:hive/hive.dart' show Hive, Box;
 import '../domains/model.dart'
     show Model, ModelDeleter, ModelSaver, ModelSearcher;
 
-class DatabaseInHive<M extends Model>
+abstract class DatabaseInHive<M extends Model>
     implements ModelDeleter<M>, ModelSaver<M>, ModelSearcher<M> {
   DatabaseInHive(this._name);
-  Box<M> _box;
+  Box<M> box;
   final String _name;
 
-  Future<void> open() async => _box = await Hive.openBox(this._name);
+  Future<void> open() async => box = await Hive.openBox<M>(this._name);
 
   @override
-  void delete(int key) => _box.delete(key);
+  void delete(int key) => box.delete(key);
 
   @override
   Future<void> save(M model) async {
     if (model.key == null) {
-      final key = await _box.add(model);
+      final key = await box.add(model);
       model.key = key;
+    } else {
+      await box.put(model.key, model);
     }
-    await _box.put(model.key, model);
   }
 
   @override
-  M search(int key) => _box.get(key);
+  M search(int key) => box.get(key);
 
   @override
-  Iterable<M> searchAll({query}) =>
-      _box.isEmpty ? null : _box.values.where(query);
+  Iterable<M> searchAll({query}) {
+    if (box.isEmpty) {
+      return null;
+    }
+
+    if (query == null) {
+      return box.values;
+    }
+
+    return box.values.where(query);
+  }
 }
