@@ -7,11 +7,12 @@ class MemoFacade<M extends Memo> {
   final ModelSaver<M> _saver;
   M _memo;
 
+  set dateTime(DateTime value) => _memo.dateTime = value;
   set title(String value) => _memo.title = value;
   set text(String value) => _memo.text = value;
 
-  void save() {
-    _saver.save(_memo);
+  Future<void> save() async {
+    await _saver.save(_memo);
   }
 }
 
@@ -34,7 +35,7 @@ class MemoFacadeFactory<M extends Memo> {
     throw 'Templete type is not matched';
   }
 
-  Iterable<MemoFacade<M>> searchAll({QueryFunction query}) => _searcher
+  Iterable<MemoFacade<M>> searchAll({QueryFunction<M> query}) => _searcher
       .searchAll(query: query)
       .map((memo) => MemoFacade<M>(_saver, memo));
 }
