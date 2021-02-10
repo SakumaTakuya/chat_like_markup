@@ -1,5 +1,8 @@
 class Model {
   int key;
+  Model copy() {
+    throw 'Not Impletmented';
+  }
 }
 
 class ModelSaver<M extends Model> {
@@ -15,11 +18,7 @@ class ModelSearcher<M extends Model> {
     throw 'Not Impletmented';
   }
 
-  Iterable<M> searchAll() {
-    throw 'Not Impletmented';
-  }
-
-  Iterable<M> filter(QueryFunction query) {
+  Iterable<M> searchAll({QueryFunction query}) {
     throw 'Not Impletmented';
   }
 }
