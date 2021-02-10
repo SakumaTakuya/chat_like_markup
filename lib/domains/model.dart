@@ -6,19 +6,19 @@ class Model {
 }
 
 class ModelSaver<M extends Model> {
-  void save(M model) {
+  Future<void> save(M model) {
     throw 'Not Impletmented';
   }
 }
 
-typedef bool QueryFunction(Model model);
+typedef bool QueryFunction<M extends Model>(M model);
 
 class ModelSearcher<M extends Model> {
   M search(int key) {
     throw 'Not Impletmented';
   }
 
-  Iterable<M> searchAll({QueryFunction query}) {
+  Iterable<M> searchAll({QueryFunction<M> query}) {
     throw 'Not Impletmented';
   }
 }
