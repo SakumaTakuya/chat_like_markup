@@ -1,0 +1,13 @@
+{
+    "@@locale": "en",
+
+    "copyFullText": "copy full text",
+        "@copyFullText": {
+            "description" : "copy full text"
+        },
+    
+    "delete": "delete",
+        "@delete": {
+            "description" : "delete"
+        }
+}
