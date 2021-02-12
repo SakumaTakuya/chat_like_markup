@@ -15,9 +15,9 @@ abstract class DatabaseInHive<M extends Model>
   Future<void> open() async => box = await Hive.openBox<M>(this._name);
 
   @override
-  void delete(int key) {
-    if (key != null) {
-      box.delete(key);
+  void delete(M model) {
+    if (model != null) {
+      box.delete(model.key);
     }
   }
 

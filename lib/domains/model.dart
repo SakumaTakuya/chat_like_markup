@@ -15,7 +15,7 @@ abstract class ModelSearcher<M extends Model> {
 }
 
 abstract class ModelDeleter<M extends Model> {
-  void delete(int key);
+  void delete(M model);
 }
 
 abstract class ModelCreater<M extends Model> {

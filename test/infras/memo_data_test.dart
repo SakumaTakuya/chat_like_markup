@@ -125,8 +125,8 @@ Future<void> main() async {
           await database.save(data);
         }
 
-        database.delete(1);
-        return database.search(1);
+        database.delete(datas[0]);
+        return database.search(0);
       });
 
       expect(future, completion(equals(null)));
