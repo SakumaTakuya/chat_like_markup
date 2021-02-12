@@ -21,11 +21,6 @@ class MemoInHive implements Memo {
   @override
   @HiveField(3)
   String title;
-
-  @override
-  MemoInHive copy() => MemoInHive()
-    ..title = title
-    ..text = text;
 }
 
 class MemoDatabaseInHive extends DatabaseInHive<MemoInHive> {
@@ -33,7 +28,12 @@ class MemoDatabaseInHive extends DatabaseInHive<MemoInHive> {
 
   @override
   Future<void> save(MemoInHive model) async {
-    model.dateTime = DateTime.now();
     await super.save(model);
   }
+
+  @override
+  MemoInHive create() => MemoInHive()
+    ..dateTime = DateTime.now()
+    ..title = ''
+    ..text = '';
 }

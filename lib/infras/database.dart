@@ -1,9 +1,13 @@
 import 'package:hive/hive.dart' show Hive, Box;
 import '../domains/model.dart'
-    show Model, ModelDeleter, ModelSaver, ModelSearcher;
+    show Model, ModelCreater, ModelDeleter, ModelSaver, ModelSearcher;
 
 abstract class DatabaseInHive<M extends Model>
-    implements ModelDeleter<M>, ModelSaver<M>, ModelSearcher<M> {
+    implements
+        ModelDeleter<M>,
+        ModelSaver<M>,
+        ModelSearcher<M>,
+        ModelCreater<M> {
   DatabaseInHive(this._name);
   Box<M> box;
   final String _name;
