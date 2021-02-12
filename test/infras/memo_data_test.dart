@@ -13,26 +13,33 @@ Future<void> main() async {
     await database.open();
   });
 
-  group('test MemoInHive', () {
-    test('copy every data but key', () {
-      final from = MemoInHive()
-        ..key = 1
-        ..title = 'test'
-        ..text = 'test';
-      final to = from.copy();
-
-      expect(to.title, from.title);
-      expect(to.text, from.text);
-      expect(to, isNot(equals(from)));
-      expect(to.key, isNot(equals(from.key)));
-    });
-  });
-
   group('test MemoDatabaseInHive', () {
+    test('key is null when creating', () {
+      final data = database.create();
+
+      expect(data.key, null);
+    });
+
+    test('datetime is not null when creating', () {
+      final data = database.create();
+
+      expect(data.dateTime, isNot(equals(null)));
+    });
+
+    test('title is not null when creating', () {
+      final data = database.create();
+
+      expect(data.title, isNot(equals(null)));
+    });
+
+    test('text is not null when creating', () {
+      final data = database.create();
+
+      expect(data.text, isNot(equals(null)));
+    });
+
     test('data has key only after saving', () {
-      final data = MemoInHive()
-        ..title = 'test'
-        ..text = 'test';
+      final data = database.create();
 
       expect(data.key, null);
       expect(
@@ -43,10 +50,7 @@ Future<void> main() async {
 
     test('data is set datetime when saving', () {
       final fromDate = DateTime.fromMicrosecondsSinceEpoch(10);
-      final data = MemoInHive()
-        ..dateTime = fromDate
-        ..title = 'test'
-        ..text = 'test';
+      final data = database.create()..dateTime = fromDate;
 
       expect(data.dateTime, fromDate);
       expect(
@@ -58,7 +62,7 @@ Future<void> main() async {
     test('search data corresponding to the key', () {
       final future = Future(() async {
         for (var i = 0; i < 3; i++) {
-          await database.save(MemoInHive()
+          await database.save(database.create()
             ..title = 'title$i'
             ..text = 'text$i');
         }
@@ -75,7 +79,7 @@ Future<void> main() async {
     test('search all data if arguments is null', () {
       final datas = List.generate(
           5,
-          (i) => MemoInHive()
+          (i) => database.create()
             ..title = 'title$i'
             ..text = 'text$i');
 
@@ -92,7 +96,7 @@ Future<void> main() async {
     test('search data satisfied the condition', () {
       final datas = List.generate(
           5,
-          (i) => MemoInHive()
+          (i) => database.create()
             ..title = 'title$i'
             ..text = 'text$i');
 
@@ -112,7 +116,7 @@ Future<void> main() async {
     test('delete target data', () {
       final datas = List.generate(
           5,
-          (i) => MemoInHive()
+          (i) => database.create()
             ..title = 'title$i'
             ..text = 'text$i');
 
