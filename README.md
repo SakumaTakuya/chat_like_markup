@@ -18,3 +18,17 @@ samples, guidance on mobile development, and a full API reference.
 ## Diagrams
 
 ![](screen.png)
+
+## Update
+### hive
+```
+flutter pub run build_runner build
+```
+
+### l10n
+`Ctrl+Shift+P` > `Flutter Get Package`
+
+### freeze
+```
+flutter pub run build_runner build
+```
