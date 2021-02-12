@@ -50,9 +50,9 @@ class MemosController<M extends Memo> extends StateNotifier<MemosState<M>>
   void initState() async {
     super.initState();
 
-    // await Future<void>.delayed(const Duration(microseconds: 500));
+    await Future<void>.delayed(const Duration(microseconds: 500));
 
-    final memos = _searcher.searchAll().toList();
+    final memos = searchAll();
     state = MemosState<M>(memos: memos);
   }
 
@@ -97,6 +97,6 @@ class MemosController<M extends Memo> extends StateNotifier<MemosState<M>>
       return [];
     }
 
-    return _searcher.searchAll(query: query);
+    return _searcher.searchAll()?.toList() ?? [];
   }
 }
