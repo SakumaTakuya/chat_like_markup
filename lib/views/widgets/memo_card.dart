@@ -15,49 +15,30 @@ class MemoCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Card(
-        child: ListTile(
-          onTap: onTap,
-          // leading: Text(_formater.format(DateTime.now())),
-          title: Text(
-            _memo.title,
-            overflow: TextOverflow.ellipsis,
-          ),
-          subtitle: Text(
-            _memo.text ?? '',
-            overflow: TextOverflow.ellipsis,
-          ),
-          trailing: PopupMenuButton<MemoCardFunc>(
-            itemBuilder: buildItem,
-            onSelected: (value) => value(),
+        child: Dismissible(
+          key: Key(_memo.key.toString()),
+          confirmDismiss: (direction) async =>
+              direction == DismissDirection.startToEnd,
+          onDismissed: (direction) => onDelete(),
+          background: Container(color: Theme.of(context).errorColor),
+          child: ListTile(
+            onTap: onTap,
+            // leading: Text(_formater.format(DateTime.now())),
+            title: Text(
+              _memo.title,
+              overflow: TextOverflow.ellipsis,
+            ),
+            subtitle: Text(
+              _memo.text,
+              overflow: TextOverflow.ellipsis,
+            ),
+            trailing: IconButton(
+              icon: const Icon(Icons.copy),
+              onPressed: _copyToClipboard,
+            ),
           ),
         ),
       );
-
-  List<PopupMenuEntry<MemoCardFunc>> buildItem(BuildContext context) => [
-        PopupMenuItem<MemoCardFunc>(
-          child: Row(children: [
-            const Icon(Icons.copy),
-            Text(AppLocalizations.of(context).copyFullText),
-          ]),
-          value: _copyToClipboard,
-        ),
-        PopupMenuItem(
-            child: Row(
-              children: [
-                Icon(
-                  Icons.delete,
-                  color: Theme.of(context).errorColor,
-                ),
-                Text(
-                  AppLocalizations.of(context).delete,
-                  style: TextStyle(
-                    color: Theme.of(context).errorColor,
-                  ),
-                ),
-              ],
-            ),
-            value: onDelete),
-      ];
 
   void _copyToClipboard() {}
 }
