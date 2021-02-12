@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../../domains/memo.dart';
+
 import 'package:intl/intl.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -24,8 +26,8 @@ class MemoCard extends StatelessWidget {
             onTap: onTap,
             title: Text(
               _memo.title == ''
-                  ? _memo.title
-                  : AppLocalizations.of(context).newMemo,
+                  ? AppLocalizations.of(context).newMemo
+                  : _memo.title,
               overflow: TextOverflow.ellipsis,
             ),
             subtitle: Text(
