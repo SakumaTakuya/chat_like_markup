@@ -97,6 +97,6 @@ class MemosController<M extends Memo> extends StateNotifier<MemosState<M>>
       return [];
     }
 
-    return _searcher.searchAll()?.toList() ?? [];
+    return _searcher.searchAll(query: query)?.toList() ?? [];
   }
 }
