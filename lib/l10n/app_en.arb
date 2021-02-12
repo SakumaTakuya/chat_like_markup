@@ -9,5 +9,10 @@
     "delete": "delete",
         "@delete": {
             "description" : "delete"
+        },
+
+    "newMemo" : "new memo",
+        "@newMemo": {
+            "description" : "new memo"
         }
 }

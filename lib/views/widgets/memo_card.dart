@@ -17,15 +17,15 @@ class MemoCard extends StatelessWidget {
   Widget build(BuildContext context) => Card(
         child: Dismissible(
           key: Key(_memo.key.toString()),
-          confirmDismiss: (direction) async =>
-              direction == DismissDirection.startToEnd,
+          direction: DismissDirection.startToEnd,
           onDismissed: (direction) => onDelete(),
           background: Container(color: Theme.of(context).errorColor),
           child: ListTile(
             onTap: onTap,
-            // leading: Text(_formater.format(DateTime.now())),
             title: Text(
-              _memo.title,
+              _memo.title == ''
+                  ? _memo.title
+                  : AppLocalizations.of(context).newMemo,
               overflow: TextOverflow.ellipsis,
             ),
             subtitle: Text(

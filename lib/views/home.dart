@@ -1,6 +1,7 @@
 import 'package:chat_like_markup/domains/memo.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import '../domains/model.dart';
 import 'widgets/memo_card.dart';
 
@@ -21,11 +22,13 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  _HomeState(this._creater, this._deleter, this._saver, this._memos);
+  _HomeState(this._creater, this._deleter, this._saver, this._memos)
+      : assert(_memos != null);
   final ModelCreater<Memo> _creater;
   final ModelDeleter<Memo> _deleter;
   final ModelSaver<Memo> _saver;
   final List<Memo> _memos;
+  final DateFormat dateKey = DateFormat.yMEd();
 
   @override
   Widget build(BuildContext context) => Scaffold(
@@ -66,14 +69,12 @@ class _HomeState extends State<Home> {
   void _deleteCard(Memo memo) {
     setState(() => _memos.remove(memo));
     _deleter.delete(memo.key);
-    print(_memos.length);
   }
 
   Memo _createCard() {
     final memo = _creater.create();
     setState(() => _memos.insert(0, memo));
     _saver.save(memo);
-    print(_memos.length);
     return memo;
   }
 }
