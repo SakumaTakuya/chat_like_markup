@@ -131,5 +131,9 @@ Future<void> main() async {
 
       expect(future, completion(equals(null)));
     });
+
+    test('there are no errors if data is null', () {
+      database.delete(null);
+    });
   });
 }
