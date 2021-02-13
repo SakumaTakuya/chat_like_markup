@@ -7,6 +7,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'applications/memo_state.dart';
 import 'infras/memo_data.dart';
 import 'views/home.dart';
+import 'views/theme.dart';
 
 Future<void> main() async {
   final database = await initDatabase();
@@ -28,16 +29,17 @@ class MyApp extends StatelessWidget {
   final MemoDatabaseInHive _database;
 
   @override
-  Widget build(BuildContext context) => StateNotifierProvider<
-          MemosController<MemoInHive>, MemosState<MemoInHive>>(
-        create: (_) => MemosController<MemoInHive>(
+  Widget build(BuildContext context) =>
+      StateNotifierProvider<MemosController, MemosState>(
+        create: (_) => MemosController(
           _database,
           _database,
           _database,
         ),
         child: MaterialApp(
           title: 'Chat Like Memo',
-          home: Home<MemoInHive>(_database),
+          home: Home(_database),
+          theme: memoTheme,
           localizationsDelegates: AppLocalizations.localizationsDelegates,
           supportedLocales: AppLocalizations.supportedLocales,
         ),

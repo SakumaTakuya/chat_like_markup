@@ -7,31 +7,31 @@ import 'package:state_notifier/state_notifier.dart';
 part 'memo_state.freezed.dart';
 
 @freezed
-abstract class MemosState<M extends Memo> with _$MemosState {
+abstract class MemosState with _$MemosState {
   const factory MemosState({
-    @Default([]) List<M> memos,
-  }) = MemosStateData<M>;
+    @Default([]) List<Memo> memos,
+  }) = MemosStateData;
   const factory MemosState.loading() = MemosStateLoading;
 }
 
-class MemosController<M extends Memo> extends StateNotifier<MemosState<M>>
+class MemosController extends StateNotifier<MemosState>
     with LocatorMixin
-    implements ModelDeleter<M>, ModelSaver<M>, ModelSearcher<M> {
+    implements ModelDeleter<Memo>, ModelSaver<Memo>, ModelSearcher<Memo> {
   MemosController(this._deleter, this._saver, this._searcher)
       : super(const MemosState.loading());
-  final ModelDeleter<M> _deleter;
-  final ModelSaver<M> _saver;
-  final ModelSearcher<M> _searcher;
+  final ModelDeleter<Memo> _deleter;
+  final ModelSaver<Memo> _saver;
+  final ModelSearcher<Memo> _searcher;
 
-  final List<M> _pendingToSaves = [];
-  final List<M> _pendingToDeletes = [];
+  final List<Memo> _pendingToSaves = [];
+  final List<Memo> _pendingToDeletes = [];
 
   @protected
   @override
   get state {
     final current = super.state;
 
-    if (current is MemosStateData<M>) {
+    if (current is MemosStateData) {
       if (_pendingToDeletes.isNotEmpty) {
         current.memos.removeWhere((memo) => _pendingToDeletes.contains(memo));
         _pendingToDeletes.clear();
@@ -47,56 +47,59 @@ class MemosController<M extends Memo> extends StateNotifier<MemosState<M>>
   }
 
   @override
-  void initState() async {
+  void initState() {
     super.initState();
 
-    await Future<void>.delayed(const Duration(microseconds: 500));
+    // await Future<void>.delayed(const Duration(microseconds: 500));
 
-    final memos = searchAll();
-    state = MemosState<M>(memos: memos);
+    final memos = _searcher.searchAll()?.toList() ?? [];
+    state = MemosState(memos: memos);
   }
 
   @override
-  void delete(M model) {
-    final currentState = (state as MemosStateData<M>);
-    if (currentState == null) {
-      _pendingToDeletes.add(model);
-    }
+  void delete(Memo model) {
+    final currentState = state;
     _deleter.delete(model);
 
-    final memos = currentState.memos.toList()..remove(model);
-    state = currentState.copyWith(memos: memos);
+    if (currentState is MemosStateData) {
+      final memos = currentState.memos.toList()..remove(model);
+      state = currentState.copyWith(memos: memos);
+      return;
+    }
+
+    _pendingToDeletes.add(model);
   }
 
   @override
-  Future<void> save(M model) async {
-    final currentState = (state as MemosStateData<M>);
-    if (currentState == null) {
-      _pendingToSaves.add(model);
-    }
+  Future<void> save(Memo model) async {
+    final currentState = state;
     _saver.save(model);
 
-    final memos = currentState.memos.toList()..add(model);
-    state = currentState.copyWith(memos: memos);
+    if (currentState is MemosStateData) {
+      final memos = currentState.memos.toList()..add(model);
+      state = currentState.copyWith(memos: memos);
+      return;
+    }
+
+    _pendingToSaves.add(model);
   }
 
   @override
-  M search(int key) {
-    final currentState = (state as MemosStateData<M>);
-    if (currentState == null) {
-      return null;
+  Memo search(int key) {
+    final currentState = state;
+    if (currentState is MemosStateData) {
+      return _searcher.search(key);
     }
 
-    return _searcher.search(key);
+    return null;
   }
 
   @override
-  Iterable<M> searchAll({query}) {
-    final currentState = (state as MemosStateData<M>);
-    if (currentState == null) {
-      return [];
+  Iterable<Memo> searchAll({query}) {
+    final currentState = state;
+    if (currentState is MemosStateData) {
+      return _searcher.searchAll(query: query)?.toList() ?? [];
     }
-
-    return _searcher.searchAll(query: query)?.toList() ?? [];
+    return [];
   }
 }

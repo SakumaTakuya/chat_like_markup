@@ -14,15 +14,15 @@ class _$MemosStateTearOff {
   const _$MemosStateTearOff();
 
 // ignore: unused_element
-  MemosStateData<M> call<M extends Memo>({List<M> memos = const []}) {
-    return MemosStateData<M>(
+  MemosStateData call({List<Memo> memos = const []}) {
+    return MemosStateData(
       memos: memos,
     );
   }
 
 // ignore: unused_element
-  MemosStateLoading<M> loading<M extends Memo>() {
-    return MemosStateLoading<M>();
+  MemosStateLoading loading() {
+    return const MemosStateLoading();
   }
 }
 
@@ -31,104 +31,100 @@ class _$MemosStateTearOff {
 const $MemosState = _$MemosStateTearOff();
 
 /// @nodoc
-mixin _$MemosState<M extends Memo> {
+mixin _$MemosState {
   @optionalTypeArgs
   TResult when<TResult extends Object>(
-    TResult $default(List<M> memos), {
+    TResult $default(List<Memo> memos), {
     @required TResult loading(),
   });
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object>(
-    TResult $default(List<M> memos), {
+    TResult $default(List<Memo> memos), {
     TResult loading(),
     @required TResult orElse(),
   });
   @optionalTypeArgs
   TResult map<TResult extends Object>(
-    TResult $default(MemosStateData<M> value), {
-    @required TResult loading(MemosStateLoading<M> value),
+    TResult $default(MemosStateData value), {
+    @required TResult loading(MemosStateLoading value),
   });
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object>(
-    TResult $default(MemosStateData<M> value), {
-    TResult loading(MemosStateLoading<M> value),
+    TResult $default(MemosStateData value), {
+    TResult loading(MemosStateLoading value),
     @required TResult orElse(),
   });
 }
 
 /// @nodoc
-abstract class $MemosStateCopyWith<M extends Memo, $Res> {
+abstract class $MemosStateCopyWith<$Res> {
   factory $MemosStateCopyWith(
-          MemosState<M> value, $Res Function(MemosState<M>) then) =
-      _$MemosStateCopyWithImpl<M, $Res>;
+          MemosState value, $Res Function(MemosState) then) =
+      _$MemosStateCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class _$MemosStateCopyWithImpl<M extends Memo, $Res>
-    implements $MemosStateCopyWith<M, $Res> {
+class _$MemosStateCopyWithImpl<$Res> implements $MemosStateCopyWith<$Res> {
   _$MemosStateCopyWithImpl(this._value, this._then);
 
-  final MemosState<M> _value;
+  final MemosState _value;
   // ignore: unused_field
-  final $Res Function(MemosState<M>) _then;
+  final $Res Function(MemosState) _then;
 }
 
 /// @nodoc
-abstract class $MemosStateDataCopyWith<M extends Memo, $Res> {
+abstract class $MemosStateDataCopyWith<$Res> {
   factory $MemosStateDataCopyWith(
-          MemosStateData<M> value, $Res Function(MemosStateData<M>) then) =
-      _$MemosStateDataCopyWithImpl<M, $Res>;
-  $Res call({List<M> memos});
+          MemosStateData value, $Res Function(MemosStateData) then) =
+      _$MemosStateDataCopyWithImpl<$Res>;
+  $Res call({List<Memo> memos});
 }
 
 /// @nodoc
-class _$MemosStateDataCopyWithImpl<M extends Memo, $Res>
-    extends _$MemosStateCopyWithImpl<M, $Res>
-    implements $MemosStateDataCopyWith<M, $Res> {
+class _$MemosStateDataCopyWithImpl<$Res> extends _$MemosStateCopyWithImpl<$Res>
+    implements $MemosStateDataCopyWith<$Res> {
   _$MemosStateDataCopyWithImpl(
-      MemosStateData<M> _value, $Res Function(MemosStateData<M>) _then)
-      : super(_value, (v) => _then(v as MemosStateData<M>));
+      MemosStateData _value, $Res Function(MemosStateData) _then)
+      : super(_value, (v) => _then(v as MemosStateData));
 
   @override
-  MemosStateData<M> get _value => super._value as MemosStateData<M>;
+  MemosStateData get _value => super._value as MemosStateData;
 
   @override
   $Res call({
     Object memos = freezed,
   }) {
-    return _then(MemosStateData<M>(
-      memos: memos == freezed ? _value.memos : memos as List<M>,
+    return _then(MemosStateData(
+      memos: memos == freezed ? _value.memos : memos as List<Memo>,
     ));
   }
 }
 
 /// @nodoc
-class _$MemosStateData<M extends Memo>
-    with DiagnosticableTreeMixin
-    implements MemosStateData<M> {
+class _$MemosStateData with DiagnosticableTreeMixin implements MemosStateData {
   const _$MemosStateData({this.memos = const []}) : assert(memos != null);
 
   @JsonKey(defaultValue: const [])
   @override
-  final List<M> memos;
+  final List<Memo> memos;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'MemosState<$M>(memos: $memos)';
+    return 'MemosState(memos: $memos)';
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties
-      ..add(DiagnosticsProperty('type', 'MemosState<$M>'))
+      ..add(DiagnosticsProperty('type', 'MemosState'))
       ..add(DiagnosticsProperty('memos', memos));
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is MemosStateData<M> &&
+        (other is MemosStateData &&
             (identical(other.memos, memos) ||
                 const DeepCollectionEquality().equals(other.memos, memos)));
   }
@@ -139,13 +135,13 @@ class _$MemosStateData<M extends Memo>
 
   @JsonKey(ignore: true)
   @override
-  $MemosStateDataCopyWith<M, MemosStateData<M>> get copyWith =>
-      _$MemosStateDataCopyWithImpl<M, MemosStateData<M>>(this, _$identity);
+  $MemosStateDataCopyWith<MemosStateData> get copyWith =>
+      _$MemosStateDataCopyWithImpl<MemosStateData>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object>(
-    TResult $default(List<M> memos), {
+    TResult $default(List<Memo> memos), {
     @required TResult loading(),
   }) {
     assert($default != null);
@@ -156,7 +152,7 @@ class _$MemosStateData<M extends Memo>
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object>(
-    TResult $default(List<M> memos), {
+    TResult $default(List<Memo> memos), {
     TResult loading(),
     @required TResult orElse(),
   }) {
@@ -170,8 +166,8 @@ class _$MemosStateData<M extends Memo>
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object>(
-    TResult $default(MemosStateData<M> value), {
-    @required TResult loading(MemosStateLoading<M> value),
+    TResult $default(MemosStateData value), {
+    @required TResult loading(MemosStateLoading value),
   }) {
     assert($default != null);
     assert(loading != null);
@@ -181,8 +177,8 @@ class _$MemosStateData<M extends Memo>
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object>(
-    TResult $default(MemosStateData<M> value), {
-    TResult loading(MemosStateLoading<M> value),
+    TResult $default(MemosStateData value), {
+    TResult loading(MemosStateLoading value),
     @required TResult orElse(),
   }) {
     assert(orElse != null);
@@ -193,53 +189,53 @@ class _$MemosStateData<M extends Memo>
   }
 }
 
-abstract class MemosStateData<M extends Memo> implements MemosState<M> {
-  const factory MemosStateData({List<M> memos}) = _$MemosStateData<M>;
+abstract class MemosStateData implements MemosState {
+  const factory MemosStateData({List<Memo> memos}) = _$MemosStateData;
 
-  List<M> get memos;
+  List<Memo> get memos;
   @JsonKey(ignore: true)
-  $MemosStateDataCopyWith<M, MemosStateData<M>> get copyWith;
+  $MemosStateDataCopyWith<MemosStateData> get copyWith;
 }
 
 /// @nodoc
-abstract class $MemosStateLoadingCopyWith<M extends Memo, $Res> {
-  factory $MemosStateLoadingCopyWith(MemosStateLoading<M> value,
-          $Res Function(MemosStateLoading<M>) then) =
-      _$MemosStateLoadingCopyWithImpl<M, $Res>;
+abstract class $MemosStateLoadingCopyWith<$Res> {
+  factory $MemosStateLoadingCopyWith(
+          MemosStateLoading value, $Res Function(MemosStateLoading) then) =
+      _$MemosStateLoadingCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class _$MemosStateLoadingCopyWithImpl<M extends Memo, $Res>
-    extends _$MemosStateCopyWithImpl<M, $Res>
-    implements $MemosStateLoadingCopyWith<M, $Res> {
+class _$MemosStateLoadingCopyWithImpl<$Res>
+    extends _$MemosStateCopyWithImpl<$Res>
+    implements $MemosStateLoadingCopyWith<$Res> {
   _$MemosStateLoadingCopyWithImpl(
-      MemosStateLoading<M> _value, $Res Function(MemosStateLoading<M>) _then)
-      : super(_value, (v) => _then(v as MemosStateLoading<M>));
+      MemosStateLoading _value, $Res Function(MemosStateLoading) _then)
+      : super(_value, (v) => _then(v as MemosStateLoading));
 
   @override
-  MemosStateLoading<M> get _value => super._value as MemosStateLoading<M>;
+  MemosStateLoading get _value => super._value as MemosStateLoading;
 }
 
 /// @nodoc
-class _$MemosStateLoading<M extends Memo>
+class _$MemosStateLoading
     with DiagnosticableTreeMixin
-    implements MemosStateLoading<M> {
+    implements MemosStateLoading {
   const _$MemosStateLoading();
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'MemosState<$M>.loading()';
+    return 'MemosState.loading()';
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties..add(DiagnosticsProperty('type', 'MemosState<$M>.loading'));
+    properties..add(DiagnosticsProperty('type', 'MemosState.loading'));
   }
 
   @override
   bool operator ==(dynamic other) {
-    return identical(this, other) || (other is MemosStateLoading<M>);
+    return identical(this, other) || (other is MemosStateLoading);
   }
 
   @override
@@ -248,7 +244,7 @@ class _$MemosStateLoading<M extends Memo>
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object>(
-    TResult $default(List<M> memos), {
+    TResult $default(List<Memo> memos), {
     @required TResult loading(),
   }) {
     assert($default != null);
@@ -259,7 +255,7 @@ class _$MemosStateLoading<M extends Memo>
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object>(
-    TResult $default(List<M> memos), {
+    TResult $default(List<Memo> memos), {
     TResult loading(),
     @required TResult orElse(),
   }) {
@@ -273,8 +269,8 @@ class _$MemosStateLoading<M extends Memo>
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object>(
-    TResult $default(MemosStateData<M> value), {
-    @required TResult loading(MemosStateLoading<M> value),
+    TResult $default(MemosStateData value), {
+    @required TResult loading(MemosStateLoading value),
   }) {
     assert($default != null);
     assert(loading != null);
@@ -284,8 +280,8 @@ class _$MemosStateLoading<M extends Memo>
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object>(
-    TResult $default(MemosStateData<M> value), {
-    TResult loading(MemosStateLoading<M> value),
+    TResult $default(MemosStateData value), {
+    TResult loading(MemosStateLoading value),
     @required TResult orElse(),
   }) {
     assert(orElse != null);
@@ -296,6 +292,6 @@ class _$MemosStateLoading<M extends Memo>
   }
 }
 
-abstract class MemosStateLoading<M extends Memo> implements MemosState<M> {
-  const factory MemosStateLoading() = _$MemosStateLoading<M>;
+abstract class MemosStateLoading implements MemosState {
+  const factory MemosStateLoading() = _$MemosStateLoading;
 }
