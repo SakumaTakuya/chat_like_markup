@@ -7,6 +7,7 @@ import '../applications/memo_state.dart';
 import '../domains/model.dart';
 import '../domains/memo.dart';
 import 'widgets/memo_card.dart';
+import 'widgets/label_card.dart';
 
 class Home extends StatefulWidget {
   Home(this._creater);
@@ -37,44 +38,25 @@ class _HomeState extends State<Home> {
               final memo = memos[index];
 
               if (index > 0 && memo.isPostedSameDay(memos[index - 1])) {
-                return MemoCard(
-                  memo,
-                  onTap: () => _transitionToEdit(memo),
-                  onDelete: () => _deleteCard(context, memo),
-                );
+                return _buildCard(context, memo);
               }
 
               return Column(
                 children: [
-                  Container(
-                    padding: EdgeInsets.all(
-                        Theme.of(context).textTheme.bodyText1.fontSize / 2),
-                    child: Text(
-                      _format.format(memo.dateTime),
-                      textAlign: TextAlign.center,
-                    ),
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      border: Border(
-                        bottom: BorderSide(
-                          width: 1.0,
-                          color: Theme.of(context).dividerColor,
-                        ),
-                      ),
-                      color: Theme.of(context).backgroundColor,
-                    ),
-                  ),
-                  MemoCard(
-                    memo,
-                    onTap: () => _transitionToEdit(memo),
-                    onDelete: () => _deleteCard(context, memo),
-                  ),
+                  LabelCard(_format.format(memo.dateTime)),
+                  _buildCard(context, memo),
                 ],
               );
             },
           );
         },
         loading: () => const Center(child: CircularProgressIndicator()),
+      );
+
+  Widget _buildCard(BuildContext context, Memo memo) => MemoCard(
+        memo,
+        onTap: () => _transitionToEdit(memo),
+        onDelete: () => _deleteCard(context, memo),
       );
 
   Widget _buildFloatingButton(BuildContext context) =>

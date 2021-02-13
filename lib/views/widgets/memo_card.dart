@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../domains/memo.dart';
+import 'decoration.dart';
 
 typedef void MemoCardFunc();
 
@@ -31,13 +32,8 @@ class MemoCard extends StatelessWidget {
           ),
         ),
         child: Container(
-          decoration: BoxDecoration(
-            border: Border(
-              bottom: BorderSide(
-                width: 1.0,
-                color: Theme.of(context).dividerColor,
-              ),
-            ),
+          decoration: BorderDecoration(
+            context,
             color: Theme.of(context).cardColor,
           ),
           child: ListTile(
