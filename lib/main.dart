@@ -39,7 +39,7 @@ class MyApp extends StatelessWidget {
         child: MaterialApp(
           title: 'Chat Like Memo',
           home: Home(_database),
-          theme: memoTheme,
+          theme: CustomTheme.lightTheme,
           localizationsDelegates: AppLocalizations.localizationsDelegates,
           supportedLocales: AppLocalizations.supportedLocales,
         ),

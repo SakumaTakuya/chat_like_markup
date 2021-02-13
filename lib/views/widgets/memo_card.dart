@@ -20,12 +20,12 @@ class MemoCard extends StatelessWidget {
         background: Container(
           alignment: Alignment.centerLeft,
           padding: EdgeInsets.fromLTRB(20.0, 0.0, 0.0, 0.0),
-          color: Colors.deepOrange[700],
+          color: Theme.of(context).colorScheme.error,
           child: Row(
             children: [
               Icon(
                 Icons.delete,
-                color: Colors.white,
+                color: Theme.of(context).colorScheme.onError,
               ),
             ],
           ),
@@ -33,7 +33,10 @@ class MemoCard extends StatelessWidget {
         child: Container(
           decoration: BoxDecoration(
             border: Border(
-              bottom: BorderSide(width: 1.0, color: Colors.grey),
+              bottom: BorderSide(
+                width: 1.0,
+                color: Theme.of(context).dividerColor,
+              ),
             ),
             color: Theme.of(context).cardColor,
           ),
