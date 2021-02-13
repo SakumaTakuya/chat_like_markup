@@ -14,9 +14,7 @@ abstract class MemosState with _$MemosState {
   const factory MemosState.loading() = MemosStateLoading;
 }
 
-class MemosController extends StateNotifier<MemosState>
-    with LocatorMixin
-    implements ModelDeleter<Memo>, ModelSaver<Memo>, ModelSearcher<Memo> {
+class MemosController extends StateNotifier<MemosState> with LocatorMixin {
   MemosController(this._deleter, this._saver, this._searcher)
       : super(const MemosState.loading());
   final ModelDeleter<Memo> _deleter;
@@ -56,7 +54,6 @@ class MemosController extends StateNotifier<MemosState>
     state = MemosState(memos: memos);
   }
 
-  @override
   void delete(Memo model) {
     final currentState = state;
     _deleter.delete(model);
@@ -70,7 +67,6 @@ class MemosController extends StateNotifier<MemosState>
     _pendingToDeletes.add(model);
   }
 
-  @override
   Future<void> save(Memo model) async {
     final currentState = state;
     _saver.save(model);
@@ -84,17 +80,6 @@ class MemosController extends StateNotifier<MemosState>
     _pendingToSaves.add(model);
   }
 
-  @override
-  Memo search(int key) {
-    final currentState = state;
-    if (currentState is MemosStateData) {
-      return _searcher.search(key);
-    }
-
-    return null;
-  }
-
-  @override
   Iterable<Memo> searchAll({query}) {
     final currentState = state;
     if (currentState is MemosStateData) {

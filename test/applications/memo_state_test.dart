@@ -10,8 +10,8 @@ class MemoImpl extends Memo {}
 Future<void> main() async {
   group('MemosState tests', () {
     test('can add element', () {
-      final state = MemosState<MemoImpl>(memos: []);
-      if (state is MemosStateData<MemoImpl>) {
+      final state = MemosState(memos: []);
+      if (state is MemosStateData) {
         expect(state.memos.length, 0);
         state.memos.add(MemoImpl());
         expect(state.memos.length, 1);
