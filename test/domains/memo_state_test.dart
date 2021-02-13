@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import '../../lib/applications/memo_state.dart';
+import '../../lib/domains/memo_state.dart';
 import '../../lib/domains/memo.dart';
 import '../../lib/domains/model.dart';
 

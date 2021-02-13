@@ -4,7 +4,7 @@ import 'package:flutter_state_notifier/flutter_state_notifier.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'applications/memo_state.dart';
+import 'domains/memo_state.dart';
 import 'infras/memo_data.dart';
 import 'views/home.dart';
 import 'views/theme.dart';
