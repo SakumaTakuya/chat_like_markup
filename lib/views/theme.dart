@@ -6,8 +6,8 @@ class CustomTheme {
       colorScheme: ColorScheme.light(
         primary: Colors.white,
         primaryVariant: Colors.blueGrey[200],
-        secondary: Colors.blue,
-        secondaryVariant: Colors.blue[700],
+        secondary: Colors.indigo,
+        secondaryVariant: Colors.indigo[700],
         surface: Colors.white,
         background: Colors.blueGrey[50],
         onPrimary: Colors.blueGrey[900],
