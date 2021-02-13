@@ -1,7 +1,4 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:hive/hive.dart';
-import 'package:hive_flutter/hive_flutter.dart';
-import 'package:provider/provider.dart';
 import '../../lib/applications/memo_state.dart';
 import '../../lib/domains/memo.dart';
 import '../../lib/domains/model.dart';
