@@ -17,12 +17,25 @@ class MemoCard extends StatelessWidget {
         key: Key(_memo.key.toString()),
         direction: DismissDirection.startToEnd,
         onDismissed: (direction) => onDelete(),
-        background: Container(color: Theme.of(context).errorColor),
+        background: Container(
+          alignment: Alignment.centerLeft,
+          padding: EdgeInsets.fromLTRB(20.0, 0.0, 0.0, 0.0),
+          color: Colors.deepOrange[700],
+          child: Row(
+            children: [
+              Icon(
+                Icons.delete,
+                color: Colors.white,
+              ),
+            ],
+          ),
+        ),
         child: Container(
-          decoration: new BoxDecoration(
-            border: new Border(
+          decoration: BoxDecoration(
+            border: Border(
               bottom: BorderSide(width: 1.0, color: Colors.grey),
             ),
+            color: Theme.of(context).cardColor,
           ),
           child: ListTile(
             onTap: onTap,

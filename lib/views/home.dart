@@ -29,6 +29,7 @@ class _HomeState extends State<Home> {
           onPressed: () async => _transitionToEdit(await _createCard(context)),
           child: Icon(Icons.add),
         ),
+        backgroundColor: Theme.of(context).backgroundColor,
       );
 
   Widget _buildList(BuildContext context) => context.watch<MemosState>().when(
@@ -51,7 +52,7 @@ class _HomeState extends State<Home> {
                 children: [
                   Container(
                     padding: EdgeInsets.all(
-                        Theme.of(context).textTheme.bodyText2.fontSize / 2),
+                        Theme.of(context).textTheme.bodyText1.fontSize / 2),
                     child: Text(
                       _format.format(memo.dateTime),
                       textAlign: TextAlign.center,
@@ -61,6 +62,7 @@ class _HomeState extends State<Home> {
                       border: const Border(
                         bottom: BorderSide(width: 1.0, color: Colors.grey),
                       ),
+                      color: Theme.of(context).backgroundColor,
                     ),
                   ),
                   MemoCard(
@@ -87,12 +89,12 @@ class _HomeState extends State<Home> {
 
   Future<Memo> _createCard(BuildContext context) async {
     final memo = _creater.create();
-    await context.read<ModelSaver<Memo>>().save(memo);
+    await context.read<MemosController>().save(memo);
     return memo;
   }
 
   void _deleteCard(BuildContext context, Memo memo) {
-    context.read<ModelDeleter<Memo>>().delete(memo);
+    context.read<MemosController>().delete(memo);
     Scaffold.of(context).showSnackBar(
       SnackBar(
         content: Text('deleted'),
