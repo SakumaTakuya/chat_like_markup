@@ -14,5 +14,10 @@
     "newMemo" : "new memo",
         "@newMemo": {
             "description" : "new memo"
+        },
+
+    "home" : "Home",
+        "@home": {
+            "description" : "Home"
         }
 }
