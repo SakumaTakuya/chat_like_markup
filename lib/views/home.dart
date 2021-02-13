@@ -25,11 +25,7 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(title: const Text('Home')),
         body: _buildList(context),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () async => _transitionToEdit(await _createCard(context)),
-          child: Icon(Icons.add),
-        ),
-        backgroundColor: Theme.of(context).backgroundColor,
+        floatingActionButton: _buildFloatingButton(context),
       );
 
   Widget _buildList(BuildContext context) => context.watch<MemosState>().when(
@@ -59,8 +55,11 @@ class _HomeState extends State<Home> {
                     ),
                     width: double.infinity,
                     decoration: BoxDecoration(
-                      border: const Border(
-                        bottom: BorderSide(width: 1.0, color: Colors.grey),
+                      border: Border(
+                        bottom: BorderSide(
+                          width: 1.0,
+                          color: Theme.of(context).dividerColor,
+                        ),
                       ),
                       color: Theme.of(context).backgroundColor,
                     ),
@@ -78,6 +77,15 @@ class _HomeState extends State<Home> {
         loading: () => const Center(child: CircularProgressIndicator()),
       );
 
+  Widget _buildFloatingButton(BuildContext context) =>
+      context.watch<MemosState>().when(
+            (_) => FloatingActionButton(
+              onPressed: () async =>
+                  _transitionToEdit(await _createCard(context)),
+              child: Icon(Icons.add),
+            ),
+            loading: () => null,
+          );
   // void _transitionToEdit(MemoFacade memo) => Navigator.push(
   //       context,
   //       CupertinoPageRoute(
