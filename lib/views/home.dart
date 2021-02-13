@@ -1,6 +1,7 @@
 import 'package:chat_like_markup/domains/memo.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import '../applications/memo_state.dart';
@@ -24,7 +25,7 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-        appBar: AppBar(title: const Text('Home')),
+        appBar: AppBar(title: Text(AppLocalizations.of(context).home)),
         body: _buildList(context),
         floatingActionButton: _buildFloatingButton(context),
       );
@@ -87,7 +88,7 @@ class _HomeState extends State<Home> {
     context.read<MemosController>().delete(memo);
     Scaffold.of(context).showSnackBar(
       SnackBar(
-        content: Text('deleted'),
+        content: Text(AppLocalizations.of(context).delete),
       ),
     );
   }
