@@ -1,17 +1,17 @@
 {
     "@@locale": "en",
 
-    "copyFullText": "copy full text",
+    "copyFullText": "Copy Full Text",
         "@copyFullText": {
             "description" : "copy full text"
         },
     
-    "delete": "delete",
+    "delete": "Delete",
         "@delete": {
             "description" : "delete"
         },
 
-    "newMemo" : "new memo",
+    "newMemo" : "New Memo",
         "@newMemo": {
             "description" : "new memo"
         },
