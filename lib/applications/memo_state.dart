@@ -21,8 +21,11 @@ class MemosController extends StateNotifier<MemosState> with LocatorMixin {
   final ModelSaver<Memo> _saver;
   final ModelSearcher<Memo> _searcher;
 
-  final List<Memo> _pendingToSaves = [];
-  final List<Memo> _pendingToDeletes = [];
+  @protected
+  final List<Memo> pendingToSaves = [];
+
+  @protected
+  final List<Memo> pendingToDeletes = [];
 
   @protected
   @override
@@ -30,14 +33,14 @@ class MemosController extends StateNotifier<MemosState> with LocatorMixin {
     final current = super.state;
 
     if (current is MemosStateData) {
-      if (_pendingToDeletes.isNotEmpty) {
-        current.memos.removeWhere((memo) => _pendingToDeletes.contains(memo));
-        _pendingToDeletes.clear();
+      if (pendingToDeletes.isNotEmpty) {
+        current.memos.removeWhere((memo) => pendingToDeletes.contains(memo));
+        pendingToDeletes.clear();
       }
 
-      if (_pendingToSaves.isNotEmpty) {
-        current.memos.addAll(_pendingToSaves);
-        _pendingToSaves.clear();
+      if (pendingToSaves.isNotEmpty) {
+        current.memos.addAll(pendingToSaves);
+        pendingToSaves.clear();
       }
     }
 
@@ -64,7 +67,7 @@ class MemosController extends StateNotifier<MemosState> with LocatorMixin {
       return;
     }
 
-    _pendingToDeletes.add(model);
+    pendingToDeletes.add(model);
   }
 
   Future<void> save(Memo model) async {
@@ -77,7 +80,7 @@ class MemosController extends StateNotifier<MemosState> with LocatorMixin {
       return;
     }
 
-    _pendingToSaves.add(model);
+    pendingToSaves.add(model);
   }
 
   Iterable<Memo> searchAll({query}) {
