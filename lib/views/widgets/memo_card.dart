@@ -1,10 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import '../../domains/memo.dart';
-
-import 'package:intl/intl.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import '../../domains/memo.dart';
 
 typedef void MemoCardFunc();
 
@@ -16,12 +13,17 @@ class MemoCard extends StatelessWidget {
   // final DateFormat _formater = DateFormat.yMMMMd();
 
   @override
-  Widget build(BuildContext context) => Card(
-        child: Dismissible(
-          key: Key(_memo.key.toString()),
-          direction: DismissDirection.startToEnd,
-          onDismissed: (direction) => onDelete(),
-          background: Container(color: Theme.of(context).errorColor),
+  Widget build(BuildContext context) => Dismissible(
+        key: Key(_memo.key.toString()),
+        direction: DismissDirection.startToEnd,
+        onDismissed: (direction) => onDelete(),
+        background: Container(color: Theme.of(context).errorColor),
+        child: Container(
+          decoration: new BoxDecoration(
+            border: new Border(
+              bottom: BorderSide(width: 1.0, color: Colors.grey),
+            ),
+          ),
           child: ListTile(
             onTap: onTap,
             title: Text(

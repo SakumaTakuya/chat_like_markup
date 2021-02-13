@@ -3,22 +3,23 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import '../domains/model.dart';
 import '../applications/memo_state.dart';
+import '../domains/model.dart';
+import '../domains/memo.dart';
 import 'widgets/memo_card.dart';
 
-class Home<M extends Memo> extends StatefulWidget {
+class Home extends StatefulWidget {
   Home(this._creater);
-  final ModelCreater<M> _creater;
+  final ModelCreater<Memo> _creater;
 
   @override
-  _HomeState createState() => _HomeState<M>(_creater);
+  _HomeState createState() => _HomeState(_creater);
 }
 
-class _HomeState<M extends Memo> extends State<Home> {
+class _HomeState extends State<Home> {
   _HomeState(this._creater);
-  final ModelCreater<M> _creater;
-  final DateFormat dateKey = DateFormat.yMEd();
+  final ModelCreater<Memo> _creater;
+  final DateFormat _format = DateFormat.yMEd();
 
   @override
   Widget build(BuildContext context) => Scaffold(
@@ -30,18 +31,44 @@ class _HomeState<M extends Memo> extends State<Home> {
         ),
       );
 
-  Widget _buildList(BuildContext context) =>
-      context.watch<MemosState<M>>().when(
+  Widget _buildList(BuildContext context) => context.watch<MemosState>().when(
         (memos) {
           memos.sort((a, b) => a.dateTime.compareTo(b.dateTime));
           return ListView.builder(
             itemCount: memos.length,
             itemBuilder: (context, index) {
               final memo = memos[index];
-              return MemoCard(
-                memo,
-                onTap: () => _transitionToEdit(memo),
-                onDelete: () => _deleteCard(context, memo),
+
+              if (index > 0 && memo.isPostedSameDay(memos[index - 1])) {
+                return MemoCard(
+                  memo,
+                  onTap: () => _transitionToEdit(memo),
+                  onDelete: () => _deleteCard(context, memo),
+                );
+              }
+
+              return Column(
+                children: [
+                  Container(
+                    padding: EdgeInsets.all(
+                        Theme.of(context).textTheme.bodyText2.fontSize / 2),
+                    child: Text(
+                      _format.format(memo.dateTime),
+                      textAlign: TextAlign.center,
+                    ),
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      border: const Border(
+                        bottom: BorderSide(width: 1.0, color: Colors.grey),
+                      ),
+                    ),
+                  ),
+                  MemoCard(
+                    memo,
+                    onTap: () => _transitionToEdit(memo),
+                    onDelete: () => _deleteCard(context, memo),
+                  ),
+                ],
               );
             },
           );
@@ -56,16 +83,16 @@ class _HomeState<M extends Memo> extends State<Home> {
   //       ),
   //     );
 
-  void _transitionToEdit(M memo) {}
+  void _transitionToEdit(Memo memo) {}
 
-  Future<M> _createCard(BuildContext context) async {
+  Future<Memo> _createCard(BuildContext context) async {
     final memo = _creater.create();
-    await context.read<MemosController<M>>().save(memo);
+    await context.read<ModelSaver<Memo>>().save(memo);
     return memo;
   }
 
-  void _deleteCard(BuildContext context, M memo) {
-    context.read<MemosController<M>>().delete(memo);
+  void _deleteCard(BuildContext context, Memo memo) {
+    context.read<ModelDeleter<Memo>>().delete(memo);
     Scaffold.of(context).showSnackBar(
       SnackBar(
         content: Text('deleted'),
