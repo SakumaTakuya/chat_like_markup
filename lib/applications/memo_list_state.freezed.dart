@@ -1,7 +1,7 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies
 
-part of 'memo_state.dart';
+part of 'memo_list_state.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -59,7 +59,7 @@ mixin _$MemosState {
 /// @nodoc
 abstract class $MemosStateCopyWith<$Res> {
   factory $MemosStateCopyWith(
-          MemosState value, $Res Function(MemosState) then) =
+          MemoListState value, $Res Function(MemoListState) then) =
       _$MemosStateCopyWithImpl<$Res>;
 }
 
@@ -67,9 +67,9 @@ abstract class $MemosStateCopyWith<$Res> {
 class _$MemosStateCopyWithImpl<$Res> implements $MemosStateCopyWith<$Res> {
   _$MemosStateCopyWithImpl(this._value, this._then);
 
-  final MemosState _value;
+  final MemoListState _value;
   // ignore: unused_field
-  final $Res Function(MemosState) _then;
+  final $Res Function(MemoListState) _then;
 }
 
 /// @nodoc
@@ -189,7 +189,7 @@ class _$MemosStateData with DiagnosticableTreeMixin implements MemosStateData {
   }
 }
 
-abstract class MemosStateData implements MemosState {
+abstract class MemosStateData implements MemoListState {
   const factory MemosStateData({List<Memo> memos}) = _$MemosStateData;
 
   List<Memo> get memos;
@@ -292,6 +292,6 @@ class _$MemosStateLoading
   }
 }
 
-abstract class MemosStateLoading implements MemosState {
+abstract class MemosStateLoading implements MemoListState {
   const factory MemosStateLoading() = _$MemosStateLoading;
 }

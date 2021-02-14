@@ -4,7 +4,7 @@ import 'package:flutter_state_notifier/flutter_state_notifier.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'applications/memo_state.dart';
+import 'applications/memo_list_state.dart';
 import 'infras/memo_data.dart';
 import 'views/home.dart';
 import 'views/theme.dart';
@@ -30,8 +30,8 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) =>
-      StateNotifierProvider<MemosController, MemosState>(
-        create: (_) => MemosController(
+      StateNotifierProvider<MemoListController, MemoListState>(
+        create: (_) => MemoListController(
           _database,
           _database,
           _database,

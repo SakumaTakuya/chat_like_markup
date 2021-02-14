@@ -4,19 +4,20 @@ import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:state_notifier/state_notifier.dart';
 
-part 'memo_state.freezed.dart';
+part 'memo_list_state.freezed.dart';
 
 @freezed
-abstract class MemosState with _$MemosState {
-  const factory MemosState({
+abstract class MemoListState with _$MemosState {
+  const factory MemoListState({
     @Default([]) List<Memo> memos,
   }) = MemosStateData;
-  const factory MemosState.loading() = MemosStateLoading;
+  const factory MemoListState.loading() = MemosStateLoading;
 }
 
-class MemosController extends StateNotifier<MemosState> with LocatorMixin {
-  MemosController(this._deleter, this._saver, this._searcher)
-      : super(const MemosState.loading());
+class MemoListController extends StateNotifier<MemoListState>
+    with LocatorMixin {
+  MemoListController(this._deleter, this._saver, this._searcher)
+      : super(const MemoListState.loading());
   final ModelDeleter<Memo> _deleter;
   final ModelSaver<Memo> _saver;
   final ModelSearcher<Memo> _searcher;
@@ -54,7 +55,7 @@ class MemosController extends StateNotifier<MemosState> with LocatorMixin {
     // await Future<void>.delayed(const Duration(microseconds: 500));
 
     final memos = _searcher.searchAll()?.toList() ?? [];
-    state = MemosState(memos: memos);
+    state = MemoListState(memos: memos);
   }
 
   void delete(Memo model) {

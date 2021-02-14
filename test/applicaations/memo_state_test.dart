@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import '../../lib/applications/memo_state.dart';
+import '../../lib/applications/memo_list_state.dart';
 import '../../lib/domains/memo.dart';
 import '../../lib/domains/model.dart';
 
@@ -26,14 +26,14 @@ class MemoOperatorImpl
 }
 
 Future<void> main() async {
-  MemosController controller;
+  MemoListController controller;
   setUp(() {
     final impl = MemoOperatorImpl();
-    controller = MemosController(impl, impl, impl);
+    controller = MemoListController(impl, impl, impl);
   });
-  group('MemosState tests', () {
+  group('MemoListState tests', () {
     test('can add element', () {
-      final state = MemosState(memos: []);
+      final state = MemoListState(memos: []);
       if (state is MemosStateData) {
         expect(state.memos.length, 0);
         state.memos.add(MemoImpl());
@@ -42,7 +42,7 @@ Future<void> main() async {
     });
   });
 
-  group('MemosController tests', () {
+  group('MemoListController tests', () {
     test('pend save with loading state', () async {
       await controller.save(MemoImpl());
       expect(controller.pendingToSaves.length, 1);
@@ -50,7 +50,7 @@ Future<void> main() async {
 
     test('add data pending save when state is enabled', () async {
       await controller.save(MemoImpl());
-      controller.state = MemosState(memos: []);
+      controller.state = MemoListState(memos: []);
 
       final state = controller.state;
       if (state is MemosStateData) {
@@ -68,7 +68,7 @@ Future<void> main() async {
     test('remove data pending delete when state is enabled', () {
       final memo = MemoImpl();
       controller.delete(memo);
-      controller.state = MemosState(memos: [memo]);
+      controller.state = MemoListState(memos: [memo]);
 
       final state = controller.state;
       if (state is MemosStateData) {
@@ -83,7 +83,7 @@ Future<void> main() async {
     });
 
     test('can search all data with enabled state', () {
-      controller.state = MemosState(memos: []);
+      controller.state = MemoListState(memos: []);
       final searched = controller.searchAll();
       expect(searched.length, 1);
     });
