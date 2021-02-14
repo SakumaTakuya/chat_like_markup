@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import '../domains/memo_state.dart';
+import '../applications/memo_state.dart';
 import '../domains/model.dart';
 import '../domains/memo.dart';
 import 'widgets/memo_card.dart';

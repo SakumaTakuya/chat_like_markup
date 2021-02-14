@@ -39,7 +39,7 @@ class MemosController extends StateNotifier<MemosState> with LocatorMixin {
       }
 
       if (pendingToSaves.isNotEmpty) {
-        current.memos.addAll(pendingToSaves);
+        pendingToSaves.forEach((e) => _save(current.memos, e));
         pendingToSaves.clear();
       }
     }
@@ -72,15 +72,26 @@ class MemosController extends StateNotifier<MemosState> with LocatorMixin {
 
   Future<void> save(Memo model) async {
     final currentState = state;
-    _saver.save(model);
+    await _saver.save(model);
 
     if (currentState is MemosStateData) {
-      final memos = currentState.memos.toList()..add(model);
+      final memos = currentState.memos.toList();
+      _save(memos, model);
+
       state = currentState.copyWith(memos: memos);
       return;
     }
 
     pendingToSaves.add(model);
+  }
+
+  void _save(List<Memo> memos, Memo model) {
+    final currentId = memos.indexWhere((e) => e.key == model.key);
+    if (currentId == -1) {
+      memos.add(model);
+    } else {
+      memos[currentId] = model;
+    }
   }
 
   Iterable<Memo> searchAll({query}) {
