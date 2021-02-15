@@ -1,4 +1,3 @@
-import 'package:chat_like_markup/domains/memo.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -7,6 +6,10 @@ import 'package:flutter_state_notifier/flutter_state_notifier.dart';
 import '../applications/memo_state.dart';
 import '../applications/memo_list_state.dart';
 import '../applications/paragraph_list_state.dart';
+import '../domains/memo.dart';
+import 'widgets/markdown_editor.dart';
+import 'widgets/markdown_preview.dart';
+import 'widgets/title_editor.dart';
 
 class Edit extends StatelessWidget {
   Edit(this._memo);
@@ -106,157 +109,4 @@ class _EditPanelState extends State<EditPanel>
                 ),
             orElse: () => null,
           );
-}
-
-class TitleEditor extends StatelessWidget {
-  TitleEditor({String title})
-      : _textEditingController = TextEditingController(text: title);
-  final TextEditingController _textEditingController;
-
-  String get title => _textEditingController.text;
-
-  @override
-  Widget build(BuildContext context) => TextField(
-        autofocus: false,
-        maxLines: 1,
-        controller: _textEditingController,
-      );
-}
-
-class MarkdownEditor extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) =>
-      context.watch<ParagraphListState>().when(
-        (paragraphs) {
-          return ListView.builder(
-            itemCount: paragraphs.length + 1,
-            itemBuilder: (context, index) {
-              final controller = context.read<ParagraphsController>();
-
-              if (index == paragraphs.length) {
-                return MemoBlockAdder(
-                  onAdded: () => controller.insert(index, null),
-                );
-              }
-
-              return MemoBlock(
-                text: paragraphs[index],
-                onAdded: () => controller.insert(index, null),
-                onEndedToInput: (value) {
-                  controller.changeText(index, value);
-                  controller.insert(index + 1, null);
-                },
-              );
-            },
-          );
-        },
-        loading: () => const Center(child: CircularProgressIndicator()),
-      );
-}
-
-typedef void MemoBlockEvent();
-typedef void MemoBlockInputEvent(String text);
-
-class MemoBlockAdder extends StatelessWidget {
-  MemoBlockAdder({this.onAdded});
-  final MemoBlockEvent onAdded;
-
-  @override
-  Widget build(BuildContext context) => Card(
-        child: FlatButton(
-          child: const Center(
-            child: const Icon(Icons.add),
-          ),
-          onPressed: onAdded,
-        ),
-      );
-}
-
-class MemoBlock extends StatefulWidget {
-  MemoBlock({this.onAdded, this.onEndedToInput, this.text});
-  final MemoBlockEvent onAdded;
-  final MemoBlockInputEvent onEndedToInput;
-  final String text;
-
-  @override
-  _MemoBlockState createState() =>
-      _MemoBlockState(onAdded, onEndedToInput, text, text == null);
-}
-
-class _MemoBlockState extends State<MemoBlock> {
-  _MemoBlockState(
-      this.onAdded, this.onEndedToInput, String text, this.isInputState)
-      : _textEditingController = TextEditingController(text: text ?? '');
-  final MemoBlockEvent onAdded;
-  final MemoBlockInputEvent onEndedToInput;
-
-  bool isInputState;
-  TextEditingController _textEditingController;
-
-  @override
-  Widget build(BuildContext context) => Card(
-        child:
-            isInputState ? _buildInputState(context) : _buildTileState(context),
-      );
-
-  Widget _buildTileState(BuildContext context) => InkWell(
-        child: Container(
-          padding:
-              EdgeInsets.all(Theme.of(context).textTheme.bodyText1.fontSize),
-          child: Row(
-            children: [
-              Text(
-                _textEditingController.text,
-                overflow: TextOverflow.ellipsis,
-              ),
-              IconButton(
-                icon: const Icon(Icons.arrow_circle_up),
-                onPressed: onAdded,
-              )
-            ],
-          ),
-        ),
-        onTap: () => setState(() => isInputState = true),
-      );
-
-  Widget _buildInputState(BuildContext context) => Container(
-      color: Theme.of(context).colorScheme.primaryVariant,
-      padding: EdgeInsets.all(
-        Theme.of(context).textTheme.bodyText1.fontSize / 2,
-      ),
-      child: GestureDetector(
-        onTap: _unfocus,
-        child: TextField(
-          autofocus: true,
-          maxLines: null,
-          keyboardType: TextInputType.multiline,
-          onChanged: (value) {
-            if (_isEndParagraph(value)) {
-              onEndedToInput(value);
-              setState(() => isInputState = false);
-            }
-          },
-          controller: _textEditingController,
-        ),
-      ));
-
-  bool _isEndParagraph(String text) => text.endsWith('\n\n');
-  void _unfocus() {
-    print('unfocus');
-    // final FocusScopeNode currentScope = FocusScope.of(context);
-    // FocusManager.instance.primaryFocus.unfocus();
-    // setState(() => isInputState = false);
-    // if (!currentScope.hasPrimaryFocus && currentScope.hasFocus) {
-    //   FocusManager.instance.primaryFocus.unfocus();
-    //   setState(() => isInputState = false);
-    // }
-  }
-}
-
-class MarkdownPreview extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) => context.watch<MemoState>().when(
-        (memo) => Text(memo.text),
-        loading: () => const Center(child: CircularProgressIndicator()),
-      );
 }
