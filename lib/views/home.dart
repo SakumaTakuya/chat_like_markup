@@ -10,17 +10,10 @@ import '../domains/memo.dart';
 import '../domains/date_comparator.dart';
 import 'widgets/memo_card.dart';
 import 'widgets/label_card.dart';
+import 'edit.dart';
 
-class Home extends StatefulWidget {
+class Home extends StatelessWidget {
   Home(this._creater);
-  final ModelCreater<Memo> _creater;
-
-  @override
-  _HomeState createState() => _HomeState(_creater);
-}
-
-class _HomeState extends State<Home> {
-  _HomeState(this._creater);
   final ModelCreater<Memo> _creater;
   final DateFormat _format = DateFormat.yMEd();
 
@@ -58,7 +51,7 @@ class _HomeState extends State<Home> {
 
   Widget _buildCard(BuildContext context, Memo memo) => MemoCard(
         memo,
-        onTap: () => _transitionToEdit(memo),
+        onTap: () => _transitionToEdit(context, memo),
         onDelete: () => _deleteCard(context, memo),
       );
 
@@ -66,19 +59,19 @@ class _HomeState extends State<Home> {
       context.watch<MemoListState>().when(
             (_) => FloatingActionButton(
               onPressed: () async =>
-                  _transitionToEdit(await _createCard(context)),
+                  _transitionToEdit(context, await _createCard(context)),
               child: Icon(Icons.add),
             ),
             loading: () => null,
           );
-  // void _transitionToEdit(MemoFacade memo) => Navigator.push(
-  //       context,
-  //       CupertinoPageRoute(
-  //         builder: (context) => Edit(memo),
-  //       ),
-  //     );
+  void _transitionToEdit(BuildContext context, Memo memo) => Navigator.push(
+        context,
+        CupertinoPageRoute(
+          builder: (context) => Edit(memo),
+        ),
+      );
 
-  void _transitionToEdit(Memo memo) {}
+  // void _transitionToEdit(Memo memo) {}
 
   Future<Memo> _createCard(BuildContext context) async {
     final memo = _creater.create();

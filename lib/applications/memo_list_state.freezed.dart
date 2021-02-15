@@ -10,28 +10,28 @@ part of 'memo_list_state.dart';
 T _$identity<T>(T value) => value;
 
 /// @nodoc
-class _$MemosStateTearOff {
-  const _$MemosStateTearOff();
+class _$MemoListStateTearOff {
+  const _$MemoListStateTearOff();
 
 // ignore: unused_element
-  MemosStateData call({List<Memo> memos = const []}) {
-    return MemosStateData(
+  MemoListStateData call({List<Memo> memos = const []}) {
+    return MemoListStateData(
       memos: memos,
     );
   }
 
 // ignore: unused_element
-  MemosStateLoading loading() {
-    return const MemosStateLoading();
+  MemoListStateLoading loading() {
+    return const MemoListStateLoading();
   }
 }
 
 /// @nodoc
 // ignore: unused_element
-const $MemosState = _$MemosStateTearOff();
+const $MemoListState = _$MemoListStateTearOff();
 
 /// @nodoc
-mixin _$MemosState {
+mixin _$MemoListState {
   @optionalTypeArgs
   TResult when<TResult extends Object>(
     TResult $default(List<Memo> memos), {
@@ -45,27 +45,28 @@ mixin _$MemosState {
   });
   @optionalTypeArgs
   TResult map<TResult extends Object>(
-    TResult $default(MemosStateData value), {
-    @required TResult loading(MemosStateLoading value),
+    TResult $default(MemoListStateData value), {
+    @required TResult loading(MemoListStateLoading value),
   });
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object>(
-    TResult $default(MemosStateData value), {
-    TResult loading(MemosStateLoading value),
+    TResult $default(MemoListStateData value), {
+    TResult loading(MemoListStateLoading value),
     @required TResult orElse(),
   });
 }
 
 /// @nodoc
-abstract class $MemosStateCopyWith<$Res> {
-  factory $MemosStateCopyWith(
+abstract class $MemoListStateCopyWith<$Res> {
+  factory $MemoListStateCopyWith(
           MemoListState value, $Res Function(MemoListState) then) =
-      _$MemosStateCopyWithImpl<$Res>;
+      _$MemoListStateCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class _$MemosStateCopyWithImpl<$Res> implements $MemosStateCopyWith<$Res> {
-  _$MemosStateCopyWithImpl(this._value, this._then);
+class _$MemoListStateCopyWithImpl<$Res>
+    implements $MemoListStateCopyWith<$Res> {
+  _$MemoListStateCopyWithImpl(this._value, this._then);
 
   final MemoListState _value;
   // ignore: unused_field
@@ -73,36 +74,39 @@ class _$MemosStateCopyWithImpl<$Res> implements $MemosStateCopyWith<$Res> {
 }
 
 /// @nodoc
-abstract class $MemosStateDataCopyWith<$Res> {
-  factory $MemosStateDataCopyWith(
-          MemosStateData value, $Res Function(MemosStateData) then) =
-      _$MemosStateDataCopyWithImpl<$Res>;
+abstract class $MemoListStateDataCopyWith<$Res> {
+  factory $MemoListStateDataCopyWith(
+          MemoListStateData value, $Res Function(MemoListStateData) then) =
+      _$MemoListStateDataCopyWithImpl<$Res>;
   $Res call({List<Memo> memos});
 }
 
 /// @nodoc
-class _$MemosStateDataCopyWithImpl<$Res> extends _$MemosStateCopyWithImpl<$Res>
-    implements $MemosStateDataCopyWith<$Res> {
-  _$MemosStateDataCopyWithImpl(
-      MemosStateData _value, $Res Function(MemosStateData) _then)
-      : super(_value, (v) => _then(v as MemosStateData));
+class _$MemoListStateDataCopyWithImpl<$Res>
+    extends _$MemoListStateCopyWithImpl<$Res>
+    implements $MemoListStateDataCopyWith<$Res> {
+  _$MemoListStateDataCopyWithImpl(
+      MemoListStateData _value, $Res Function(MemoListStateData) _then)
+      : super(_value, (v) => _then(v as MemoListStateData));
 
   @override
-  MemosStateData get _value => super._value as MemosStateData;
+  MemoListStateData get _value => super._value as MemoListStateData;
 
   @override
   $Res call({
     Object memos = freezed,
   }) {
-    return _then(MemosStateData(
+    return _then(MemoListStateData(
       memos: memos == freezed ? _value.memos : memos as List<Memo>,
     ));
   }
 }
 
 /// @nodoc
-class _$MemosStateData with DiagnosticableTreeMixin implements MemosStateData {
-  const _$MemosStateData({this.memos = const []}) : assert(memos != null);
+class _$MemoListStateData
+    with DiagnosticableTreeMixin
+    implements MemoListStateData {
+  const _$MemoListStateData({this.memos = const []}) : assert(memos != null);
 
   @JsonKey(defaultValue: const [])
   @override
@@ -110,21 +114,21 @@ class _$MemosStateData with DiagnosticableTreeMixin implements MemosStateData {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'MemosState(memos: $memos)';
+    return 'MemoListState(memos: $memos)';
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties
-      ..add(DiagnosticsProperty('type', 'MemosState'))
+      ..add(DiagnosticsProperty('type', 'MemoListState'))
       ..add(DiagnosticsProperty('memos', memos));
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is MemosStateData &&
+        (other is MemoListStateData &&
             (identical(other.memos, memos) ||
                 const DeepCollectionEquality().equals(other.memos, memos)));
   }
@@ -135,8 +139,8 @@ class _$MemosStateData with DiagnosticableTreeMixin implements MemosStateData {
 
   @JsonKey(ignore: true)
   @override
-  $MemosStateDataCopyWith<MemosStateData> get copyWith =>
-      _$MemosStateDataCopyWithImpl<MemosStateData>(this, _$identity);
+  $MemoListStateDataCopyWith<MemoListStateData> get copyWith =>
+      _$MemoListStateDataCopyWithImpl<MemoListStateData>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -166,8 +170,8 @@ class _$MemosStateData with DiagnosticableTreeMixin implements MemosStateData {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object>(
-    TResult $default(MemosStateData value), {
-    @required TResult loading(MemosStateLoading value),
+    TResult $default(MemoListStateData value), {
+    @required TResult loading(MemoListStateLoading value),
   }) {
     assert($default != null);
     assert(loading != null);
@@ -177,8 +181,8 @@ class _$MemosStateData with DiagnosticableTreeMixin implements MemosStateData {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object>(
-    TResult $default(MemosStateData value), {
-    TResult loading(MemosStateLoading value),
+    TResult $default(MemoListStateData value), {
+    TResult loading(MemoListStateLoading value),
     @required TResult orElse(),
   }) {
     assert(orElse != null);
@@ -189,53 +193,53 @@ class _$MemosStateData with DiagnosticableTreeMixin implements MemosStateData {
   }
 }
 
-abstract class MemosStateData implements MemoListState {
-  const factory MemosStateData({List<Memo> memos}) = _$MemosStateData;
+abstract class MemoListStateData implements MemoListState {
+  const factory MemoListStateData({List<Memo> memos}) = _$MemoListStateData;
 
   List<Memo> get memos;
   @JsonKey(ignore: true)
-  $MemosStateDataCopyWith<MemosStateData> get copyWith;
+  $MemoListStateDataCopyWith<MemoListStateData> get copyWith;
 }
 
 /// @nodoc
-abstract class $MemosStateLoadingCopyWith<$Res> {
-  factory $MemosStateLoadingCopyWith(
-          MemosStateLoading value, $Res Function(MemosStateLoading) then) =
-      _$MemosStateLoadingCopyWithImpl<$Res>;
+abstract class $MemoListStateLoadingCopyWith<$Res> {
+  factory $MemoListStateLoadingCopyWith(MemoListStateLoading value,
+          $Res Function(MemoListStateLoading) then) =
+      _$MemoListStateLoadingCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class _$MemosStateLoadingCopyWithImpl<$Res>
-    extends _$MemosStateCopyWithImpl<$Res>
-    implements $MemosStateLoadingCopyWith<$Res> {
-  _$MemosStateLoadingCopyWithImpl(
-      MemosStateLoading _value, $Res Function(MemosStateLoading) _then)
-      : super(_value, (v) => _then(v as MemosStateLoading));
+class _$MemoListStateLoadingCopyWithImpl<$Res>
+    extends _$MemoListStateCopyWithImpl<$Res>
+    implements $MemoListStateLoadingCopyWith<$Res> {
+  _$MemoListStateLoadingCopyWithImpl(
+      MemoListStateLoading _value, $Res Function(MemoListStateLoading) _then)
+      : super(_value, (v) => _then(v as MemoListStateLoading));
 
   @override
-  MemosStateLoading get _value => super._value as MemosStateLoading;
+  MemoListStateLoading get _value => super._value as MemoListStateLoading;
 }
 
 /// @nodoc
-class _$MemosStateLoading
+class _$MemoListStateLoading
     with DiagnosticableTreeMixin
-    implements MemosStateLoading {
-  const _$MemosStateLoading();
+    implements MemoListStateLoading {
+  const _$MemoListStateLoading();
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'MemosState.loading()';
+    return 'MemoListState.loading()';
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties..add(DiagnosticsProperty('type', 'MemosState.loading'));
+    properties..add(DiagnosticsProperty('type', 'MemoListState.loading'));
   }
 
   @override
   bool operator ==(dynamic other) {
-    return identical(this, other) || (other is MemosStateLoading);
+    return identical(this, other) || (other is MemoListStateLoading);
   }
 
   @override
@@ -269,8 +273,8 @@ class _$MemosStateLoading
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object>(
-    TResult $default(MemosStateData value), {
-    @required TResult loading(MemosStateLoading value),
+    TResult $default(MemoListStateData value), {
+    @required TResult loading(MemoListStateLoading value),
   }) {
     assert($default != null);
     assert(loading != null);
@@ -280,8 +284,8 @@ class _$MemosStateLoading
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object>(
-    TResult $default(MemosStateData value), {
-    TResult loading(MemosStateLoading value),
+    TResult $default(MemoListStateData value), {
+    TResult loading(MemoListStateLoading value),
     @required TResult orElse(),
   }) {
     assert(orElse != null);
@@ -292,6 +296,6 @@ class _$MemosStateLoading
   }
 }
 
-abstract class MemosStateLoading implements MemoListState {
-  const factory MemosStateLoading() = _$MemosStateLoading;
+abstract class MemoListStateLoading implements MemoListState {
+  const factory MemoListStateLoading() = _$MemoListStateLoading;
 }

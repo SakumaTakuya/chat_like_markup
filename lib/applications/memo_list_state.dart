@@ -7,11 +7,11 @@ import 'package:state_notifier/state_notifier.dart';
 part 'memo_list_state.freezed.dart';
 
 @freezed
-abstract class MemoListState with _$MemosState {
+abstract class MemoListState with _$MemoListState {
   const factory MemoListState({
     @Default([]) List<Memo> memos,
-  }) = MemosStateData;
-  const factory MemoListState.loading() = MemosStateLoading;
+  }) = MemoListStateData;
+  const factory MemoListState.loading() = MemoListStateLoading;
 }
 
 class MemoListController extends StateNotifier<MemoListState>
@@ -33,7 +33,7 @@ class MemoListController extends StateNotifier<MemoListState>
   get state {
     final current = super.state;
 
-    if (current is MemosStateData) {
+    if (current is MemoListStateData) {
       if (pendingToDeletes.isNotEmpty) {
         current.memos.removeWhere((memo) => pendingToDeletes.contains(memo));
         pendingToDeletes.clear();
@@ -62,7 +62,7 @@ class MemoListController extends StateNotifier<MemoListState>
     final currentState = state;
     _deleter.delete(model);
 
-    if (currentState is MemosStateData) {
+    if (currentState is MemoListStateData) {
       final memos = currentState.memos.toList()..remove(model);
       state = currentState.copyWith(memos: memos);
       return;
@@ -75,7 +75,7 @@ class MemoListController extends StateNotifier<MemoListState>
     final currentState = state;
     await _saver.save(model);
 
-    if (currentState is MemosStateData) {
+    if (currentState is MemoListStateData) {
       final memos = currentState.memos.toList();
       _save(memos, model);
 
@@ -97,7 +97,7 @@ class MemoListController extends StateNotifier<MemoListState>
 
   Iterable<Memo> searchAll({query}) {
     final currentState = state;
-    if (currentState is MemosStateData) {
+    if (currentState is MemoListStateData) {
       return _searcher.searchAll(query: query)?.toList() ?? [];
     }
     return [];

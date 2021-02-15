@@ -34,7 +34,7 @@ Future<void> main() async {
   group('MemoListState tests', () {
     test('can add element', () {
       final state = MemoListState(memos: []);
-      if (state is MemosStateData) {
+      if (state is MemoListStateData) {
         expect(state.memos.length, 0);
         state.memos.add(MemoImpl());
         expect(state.memos.length, 1);
@@ -53,7 +53,7 @@ Future<void> main() async {
       controller.state = MemoListState(memos: []);
 
       final state = controller.state;
-      if (state is MemosStateData) {
+      if (state is MemoListStateData) {
         expect(state.memos.length, 1);
         expect(controller.pendingToSaves.length, 0);
       }
@@ -71,7 +71,7 @@ Future<void> main() async {
       controller.state = MemoListState(memos: [memo]);
 
       final state = controller.state;
-      if (state is MemosStateData) {
+      if (state is MemoListStateData) {
         expect(state.memos.length, 0);
         expect(controller.pendingToDeletes.length, 0);
       }
