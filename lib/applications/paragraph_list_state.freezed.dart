@@ -1,7 +1,7 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies
 
-part of 'paragraph_state.dart';
+part of 'paragraph_list_state.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -14,15 +14,15 @@ class _$ParagraphsStateTearOff {
   const _$ParagraphsStateTearOff();
 
 // ignore: unused_element
-  ParagraphsStateData call({List<String> paragraphs = const []}) {
-    return ParagraphsStateData(
+  ParagraphListStateData call({List<String> paragraphs = const []}) {
+    return ParagraphListStateData(
       paragraphs: paragraphs,
     );
   }
 
 // ignore: unused_element
-  ParagraphsStateLoading loading() {
-    return const ParagraphsStateLoading();
+  ParagraphListStateLoading loading() {
+    return const ParagraphListStateLoading();
   }
 }
 
@@ -31,7 +31,7 @@ class _$ParagraphsStateTearOff {
 const $ParagraphsState = _$ParagraphsStateTearOff();
 
 /// @nodoc
-mixin _$ParagraphsState {
+mixin _$ParagraphListState {
   @optionalTypeArgs
   TResult when<TResult extends Object>(
     TResult $default(List<String> paragraphs), {
@@ -45,13 +45,13 @@ mixin _$ParagraphsState {
   });
   @optionalTypeArgs
   TResult map<TResult extends Object>(
-    TResult $default(ParagraphsStateData value), {
-    @required TResult loading(ParagraphsStateLoading value),
+    TResult $default(ParagraphListStateData value), {
+    @required TResult loading(ParagraphListStateLoading value),
   });
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object>(
-    TResult $default(ParagraphsStateData value), {
-    TResult loading(ParagraphsStateLoading value),
+    TResult $default(ParagraphListStateData value), {
+    TResult loading(ParagraphListStateLoading value),
     @required TResult orElse(),
   });
 }
@@ -59,7 +59,7 @@ mixin _$ParagraphsState {
 /// @nodoc
 abstract class $ParagraphsStateCopyWith<$Res> {
   factory $ParagraphsStateCopyWith(
-          ParagraphsState value, $Res Function(ParagraphsState) then) =
+          ParagraphListState value, $Res Function(ParagraphListState) then) =
       _$ParagraphsStateCopyWithImpl<$Res>;
 }
 
@@ -68,15 +68,15 @@ class _$ParagraphsStateCopyWithImpl<$Res>
     implements $ParagraphsStateCopyWith<$Res> {
   _$ParagraphsStateCopyWithImpl(this._value, this._then);
 
-  final ParagraphsState _value;
+  final ParagraphListState _value;
   // ignore: unused_field
-  final $Res Function(ParagraphsState) _then;
+  final $Res Function(ParagraphListState) _then;
 }
 
 /// @nodoc
 abstract class $ParagraphsStateDataCopyWith<$Res> {
-  factory $ParagraphsStateDataCopyWith(
-          ParagraphsStateData value, $Res Function(ParagraphsStateData) then) =
+  factory $ParagraphsStateDataCopyWith(ParagraphListStateData value,
+          $Res Function(ParagraphListStateData) then) =
       _$ParagraphsStateDataCopyWithImpl<$Res>;
   $Res call({List<String> paragraphs});
 }
@@ -85,18 +85,18 @@ abstract class $ParagraphsStateDataCopyWith<$Res> {
 class _$ParagraphsStateDataCopyWithImpl<$Res>
     extends _$ParagraphsStateCopyWithImpl<$Res>
     implements $ParagraphsStateDataCopyWith<$Res> {
-  _$ParagraphsStateDataCopyWithImpl(
-      ParagraphsStateData _value, $Res Function(ParagraphsStateData) _then)
-      : super(_value, (v) => _then(v as ParagraphsStateData));
+  _$ParagraphsStateDataCopyWithImpl(ParagraphListStateData _value,
+      $Res Function(ParagraphListStateData) _then)
+      : super(_value, (v) => _then(v as ParagraphListStateData));
 
   @override
-  ParagraphsStateData get _value => super._value as ParagraphsStateData;
+  ParagraphListStateData get _value => super._value as ParagraphListStateData;
 
   @override
   $Res call({
     Object paragraphs = freezed,
   }) {
-    return _then(ParagraphsStateData(
+    return _then(ParagraphListStateData(
       paragraphs: paragraphs == freezed
           ? _value.paragraphs
           : paragraphs as List<String>,
@@ -107,7 +107,7 @@ class _$ParagraphsStateDataCopyWithImpl<$Res>
 /// @nodoc
 class _$ParagraphsStateData
     with DiagnosticableTreeMixin
-    implements ParagraphsStateData {
+    implements ParagraphListStateData {
   const _$ParagraphsStateData({this.paragraphs = const []})
       : assert(paragraphs != null);
 
@@ -131,7 +131,7 @@ class _$ParagraphsStateData
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is ParagraphsStateData &&
+        (other is ParagraphListStateData &&
             (identical(other.paragraphs, paragraphs) ||
                 const DeepCollectionEquality()
                     .equals(other.paragraphs, paragraphs)));
@@ -143,8 +143,9 @@ class _$ParagraphsStateData
 
   @JsonKey(ignore: true)
   @override
-  $ParagraphsStateDataCopyWith<ParagraphsStateData> get copyWith =>
-      _$ParagraphsStateDataCopyWithImpl<ParagraphsStateData>(this, _$identity);
+  $ParagraphsStateDataCopyWith<ParagraphListStateData> get copyWith =>
+      _$ParagraphsStateDataCopyWithImpl<ParagraphListStateData>(
+          this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -174,8 +175,8 @@ class _$ParagraphsStateData
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object>(
-    TResult $default(ParagraphsStateData value), {
-    @required TResult loading(ParagraphsStateLoading value),
+    TResult $default(ParagraphListStateData value), {
+    @required TResult loading(ParagraphListStateLoading value),
   }) {
     assert($default != null);
     assert(loading != null);
@@ -185,8 +186,8 @@ class _$ParagraphsStateData
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object>(
-    TResult $default(ParagraphsStateData value), {
-    TResult loading(ParagraphsStateLoading value),
+    TResult $default(ParagraphListStateData value), {
+    TResult loading(ParagraphListStateLoading value),
     @required TResult orElse(),
   }) {
     assert(orElse != null);
@@ -197,19 +198,19 @@ class _$ParagraphsStateData
   }
 }
 
-abstract class ParagraphsStateData implements ParagraphsState {
-  const factory ParagraphsStateData({List<String> paragraphs}) =
+abstract class ParagraphListStateData implements ParagraphListState {
+  const factory ParagraphListStateData({List<String> paragraphs}) =
       _$ParagraphsStateData;
 
   List<String> get paragraphs;
   @JsonKey(ignore: true)
-  $ParagraphsStateDataCopyWith<ParagraphsStateData> get copyWith;
+  $ParagraphsStateDataCopyWith<ParagraphListStateData> get copyWith;
 }
 
 /// @nodoc
 abstract class $ParagraphsStateLoadingCopyWith<$Res> {
-  factory $ParagraphsStateLoadingCopyWith(ParagraphsStateLoading value,
-          $Res Function(ParagraphsStateLoading) then) =
+  factory $ParagraphsStateLoadingCopyWith(ParagraphListStateLoading value,
+          $Res Function(ParagraphListStateLoading) then) =
       _$ParagraphsStateLoadingCopyWithImpl<$Res>;
 }
 
@@ -217,18 +218,19 @@ abstract class $ParagraphsStateLoadingCopyWith<$Res> {
 class _$ParagraphsStateLoadingCopyWithImpl<$Res>
     extends _$ParagraphsStateCopyWithImpl<$Res>
     implements $ParagraphsStateLoadingCopyWith<$Res> {
-  _$ParagraphsStateLoadingCopyWithImpl(ParagraphsStateLoading _value,
-      $Res Function(ParagraphsStateLoading) _then)
-      : super(_value, (v) => _then(v as ParagraphsStateLoading));
+  _$ParagraphsStateLoadingCopyWithImpl(ParagraphListStateLoading _value,
+      $Res Function(ParagraphListStateLoading) _then)
+      : super(_value, (v) => _then(v as ParagraphListStateLoading));
 
   @override
-  ParagraphsStateLoading get _value => super._value as ParagraphsStateLoading;
+  ParagraphListStateLoading get _value =>
+      super._value as ParagraphListStateLoading;
 }
 
 /// @nodoc
 class _$ParagraphsStateLoading
     with DiagnosticableTreeMixin
-    implements ParagraphsStateLoading {
+    implements ParagraphListStateLoading {
   const _$ParagraphsStateLoading();
 
   @override
@@ -244,7 +246,7 @@ class _$ParagraphsStateLoading
 
   @override
   bool operator ==(dynamic other) {
-    return identical(this, other) || (other is ParagraphsStateLoading);
+    return identical(this, other) || (other is ParagraphListStateLoading);
   }
 
   @override
@@ -278,8 +280,8 @@ class _$ParagraphsStateLoading
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object>(
-    TResult $default(ParagraphsStateData value), {
-    @required TResult loading(ParagraphsStateLoading value),
+    TResult $default(ParagraphListStateData value), {
+    @required TResult loading(ParagraphListStateLoading value),
   }) {
     assert($default != null);
     assert(loading != null);
@@ -289,8 +291,8 @@ class _$ParagraphsStateLoading
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object>(
-    TResult $default(ParagraphsStateData value), {
-    TResult loading(ParagraphsStateLoading value),
+    TResult $default(ParagraphListStateData value), {
+    TResult loading(ParagraphListStateLoading value),
     @required TResult orElse(),
   }) {
     assert(orElse != null);
@@ -301,6 +303,6 @@ class _$ParagraphsStateLoading
   }
 }
 
-abstract class ParagraphsStateLoading implements ParagraphsState {
-  const factory ParagraphsStateLoading() = _$ParagraphsStateLoading;
+abstract class ParagraphListStateLoading implements ParagraphListState {
+  const factory ParagraphListStateLoading() = _$ParagraphsStateLoading;
 }

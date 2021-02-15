@@ -6,7 +6,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_state_notifier/flutter_state_notifier.dart';
 import '../applications/memo_state.dart';
 import '../applications/memo_list_state.dart';
-import '../applications/paragraph_state.dart';
+import '../applications/paragraph_list_state.dart';
 
 class Edit extends StatelessWidget {
   Edit(this._memo);
@@ -16,7 +16,7 @@ class Edit extends StatelessWidget {
   Widget build(BuildContext context) =>
       StateNotifierProvider<MemoController, MemoState>(
         create: (_) => MemoController(_memo),
-        child: StateNotifierProvider<ParagraphsController, ParagraphsState>(
+        child: StateNotifierProvider<ParagraphsController, ParagraphListState>(
           create: (_) => ParagraphsController()..buildParagraphs(_memo),
           child: EditPanel(),
         ),
@@ -99,7 +99,7 @@ class _EditPanelState extends State<EditPanel>
   }
 
   void _updateWithTitle(BuildContext context, String title) =>
-      context.read<ParagraphsState>().maybeWhen(
+      context.read<ParagraphListState>().maybeWhen(
             (paragraphs) => context.read<MemoController>().updateMemo(
                   title,
                   paragraphs,
@@ -125,7 +125,8 @@ class TitleEditor extends StatelessWidget {
 
 class MarkdownEditor extends StatelessWidget {
   @override
-  Widget build(BuildContext context) => context.watch<ParagraphsState>().when(
+  Widget build(BuildContext context) =>
+      context.watch<ParagraphListState>().when(
         (paragraphs) {
           return ListView.builder(
             itemCount: paragraphs.length + 1,
