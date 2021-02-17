@@ -1,16 +1,17 @@
 import 'memo.dart';
+import 'paragraph.dart';
 
 extension ParagraphsMemoConverter on Memo {
-  void createTextFrom(List<String> paragraphs) {
-    this.text = paragraphs.join("\n\n");
+  void createTextFrom(List<Paragraph> paragraphs) {
+    this.text = paragraphs.map((e) => e.content).join("\n\n");
   }
 
-  List<String> splitIntoParagraphs() {
+  List<Paragraph> splitIntoParagraphs() {
     final exp = RegExp(r'\n{2,}');
     return exp
             .allMatches(this.text)
-            ?.map((match) => match.group(0))
+            ?.map((match) => Paragraph(match.group(0)))
             ?.toList() ??
-        [this.text];
+        [Paragraph(this.text)];
   }
 }

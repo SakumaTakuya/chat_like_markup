@@ -10,11 +10,11 @@ part of 'paragraph_list_state.dart';
 T _$identity<T>(T value) => value;
 
 /// @nodoc
-class _$ParagraphsStateTearOff {
-  const _$ParagraphsStateTearOff();
+class _$ParagraphListStateTearOff {
+  const _$ParagraphListStateTearOff();
 
 // ignore: unused_element
-  ParagraphListStateData call({List<String> paragraphs = const []}) {
+  ParagraphListStateData call({List<Paragraph> paragraphs = const []}) {
     return ParagraphListStateData(
       paragraphs: paragraphs,
     );
@@ -28,18 +28,18 @@ class _$ParagraphsStateTearOff {
 
 /// @nodoc
 // ignore: unused_element
-const $ParagraphsState = _$ParagraphsStateTearOff();
+const $ParagraphListState = _$ParagraphListStateTearOff();
 
 /// @nodoc
 mixin _$ParagraphListState {
   @optionalTypeArgs
   TResult when<TResult extends Object>(
-    TResult $default(List<String> paragraphs), {
+    TResult $default(List<Paragraph> paragraphs), {
     @required TResult loading(),
   });
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object>(
-    TResult $default(List<String> paragraphs), {
+    TResult $default(List<Paragraph> paragraphs), {
     TResult loading(),
     @required TResult orElse(),
   });
@@ -57,16 +57,16 @@ mixin _$ParagraphListState {
 }
 
 /// @nodoc
-abstract class $ParagraphsStateCopyWith<$Res> {
-  factory $ParagraphsStateCopyWith(
+abstract class $ParagraphListStateCopyWith<$Res> {
+  factory $ParagraphListStateCopyWith(
           ParagraphListState value, $Res Function(ParagraphListState) then) =
-      _$ParagraphsStateCopyWithImpl<$Res>;
+      _$ParagraphListStateCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class _$ParagraphsStateCopyWithImpl<$Res>
-    implements $ParagraphsStateCopyWith<$Res> {
-  _$ParagraphsStateCopyWithImpl(this._value, this._then);
+class _$ParagraphListStateCopyWithImpl<$Res>
+    implements $ParagraphListStateCopyWith<$Res> {
+  _$ParagraphListStateCopyWithImpl(this._value, this._then);
 
   final ParagraphListState _value;
   // ignore: unused_field
@@ -74,18 +74,18 @@ class _$ParagraphsStateCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class $ParagraphsStateDataCopyWith<$Res> {
-  factory $ParagraphsStateDataCopyWith(ParagraphListStateData value,
+abstract class $ParagraphListStateDataCopyWith<$Res> {
+  factory $ParagraphListStateDataCopyWith(ParagraphListStateData value,
           $Res Function(ParagraphListStateData) then) =
-      _$ParagraphsStateDataCopyWithImpl<$Res>;
-  $Res call({List<String> paragraphs});
+      _$ParagraphListStateDataCopyWithImpl<$Res>;
+  $Res call({List<Paragraph> paragraphs});
 }
 
 /// @nodoc
-class _$ParagraphsStateDataCopyWithImpl<$Res>
-    extends _$ParagraphsStateCopyWithImpl<$Res>
-    implements $ParagraphsStateDataCopyWith<$Res> {
-  _$ParagraphsStateDataCopyWithImpl(ParagraphListStateData _value,
+class _$ParagraphListStateDataCopyWithImpl<$Res>
+    extends _$ParagraphListStateCopyWithImpl<$Res>
+    implements $ParagraphListStateDataCopyWith<$Res> {
+  _$ParagraphListStateDataCopyWithImpl(ParagraphListStateData _value,
       $Res Function(ParagraphListStateData) _then)
       : super(_value, (v) => _then(v as ParagraphListStateData));
 
@@ -99,32 +99,32 @@ class _$ParagraphsStateDataCopyWithImpl<$Res>
     return _then(ParagraphListStateData(
       paragraphs: paragraphs == freezed
           ? _value.paragraphs
-          : paragraphs as List<String>,
+          : paragraphs as List<Paragraph>,
     ));
   }
 }
 
 /// @nodoc
-class _$ParagraphsStateData
+class _$ParagraphListStateData
     with DiagnosticableTreeMixin
     implements ParagraphListStateData {
-  const _$ParagraphsStateData({this.paragraphs = const []})
+  const _$ParagraphListStateData({this.paragraphs = const []})
       : assert(paragraphs != null);
 
   @JsonKey(defaultValue: const [])
   @override
-  final List<String> paragraphs;
+  final List<Paragraph> paragraphs;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'ParagraphsState(paragraphs: $paragraphs)';
+    return 'ParagraphListState(paragraphs: $paragraphs)';
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties
-      ..add(DiagnosticsProperty('type', 'ParagraphsState'))
+      ..add(DiagnosticsProperty('type', 'ParagraphListState'))
       ..add(DiagnosticsProperty('paragraphs', paragraphs));
   }
 
@@ -143,14 +143,14 @@ class _$ParagraphsStateData
 
   @JsonKey(ignore: true)
   @override
-  $ParagraphsStateDataCopyWith<ParagraphListStateData> get copyWith =>
-      _$ParagraphsStateDataCopyWithImpl<ParagraphListStateData>(
+  $ParagraphListStateDataCopyWith<ParagraphListStateData> get copyWith =>
+      _$ParagraphListStateDataCopyWithImpl<ParagraphListStateData>(
           this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object>(
-    TResult $default(List<String> paragraphs), {
+    TResult $default(List<Paragraph> paragraphs), {
     @required TResult loading(),
   }) {
     assert($default != null);
@@ -161,7 +161,7 @@ class _$ParagraphsStateData
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object>(
-    TResult $default(List<String> paragraphs), {
+    TResult $default(List<Paragraph> paragraphs), {
     TResult loading(),
     @required TResult orElse(),
   }) {
@@ -199,26 +199,26 @@ class _$ParagraphsStateData
 }
 
 abstract class ParagraphListStateData implements ParagraphListState {
-  const factory ParagraphListStateData({List<String> paragraphs}) =
-      _$ParagraphsStateData;
+  const factory ParagraphListStateData({List<Paragraph> paragraphs}) =
+      _$ParagraphListStateData;
 
-  List<String> get paragraphs;
+  List<Paragraph> get paragraphs;
   @JsonKey(ignore: true)
-  $ParagraphsStateDataCopyWith<ParagraphListStateData> get copyWith;
+  $ParagraphListStateDataCopyWith<ParagraphListStateData> get copyWith;
 }
 
 /// @nodoc
-abstract class $ParagraphsStateLoadingCopyWith<$Res> {
-  factory $ParagraphsStateLoadingCopyWith(ParagraphListStateLoading value,
+abstract class $ParagraphListStateLoadingCopyWith<$Res> {
+  factory $ParagraphListStateLoadingCopyWith(ParagraphListStateLoading value,
           $Res Function(ParagraphListStateLoading) then) =
-      _$ParagraphsStateLoadingCopyWithImpl<$Res>;
+      _$ParagraphListStateLoadingCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class _$ParagraphsStateLoadingCopyWithImpl<$Res>
-    extends _$ParagraphsStateCopyWithImpl<$Res>
-    implements $ParagraphsStateLoadingCopyWith<$Res> {
-  _$ParagraphsStateLoadingCopyWithImpl(ParagraphListStateLoading _value,
+class _$ParagraphListStateLoadingCopyWithImpl<$Res>
+    extends _$ParagraphListStateCopyWithImpl<$Res>
+    implements $ParagraphListStateLoadingCopyWith<$Res> {
+  _$ParagraphListStateLoadingCopyWithImpl(ParagraphListStateLoading _value,
       $Res Function(ParagraphListStateLoading) _then)
       : super(_value, (v) => _then(v as ParagraphListStateLoading));
 
@@ -228,20 +228,20 @@ class _$ParagraphsStateLoadingCopyWithImpl<$Res>
 }
 
 /// @nodoc
-class _$ParagraphsStateLoading
+class _$ParagraphListStateLoading
     with DiagnosticableTreeMixin
     implements ParagraphListStateLoading {
-  const _$ParagraphsStateLoading();
+  const _$ParagraphListStateLoading();
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'ParagraphsState.loading()';
+    return 'ParagraphListState.loading()';
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties..add(DiagnosticsProperty('type', 'ParagraphsState.loading'));
+    properties..add(DiagnosticsProperty('type', 'ParagraphListState.loading'));
   }
 
   @override
@@ -255,7 +255,7 @@ class _$ParagraphsStateLoading
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object>(
-    TResult $default(List<String> paragraphs), {
+    TResult $default(List<Paragraph> paragraphs), {
     @required TResult loading(),
   }) {
     assert($default != null);
@@ -266,7 +266,7 @@ class _$ParagraphsStateLoading
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object>(
-    TResult $default(List<String> paragraphs), {
+    TResult $default(List<Paragraph> paragraphs), {
     TResult loading(),
     @required TResult orElse(),
   }) {
@@ -304,5 +304,5 @@ class _$ParagraphsStateLoading
 }
 
 abstract class ParagraphListStateLoading implements ParagraphListState {
-  const factory ParagraphListStateLoading() = _$ParagraphsStateLoading;
+  const factory ParagraphListStateLoading() = _$ParagraphListStateLoading;
 }
