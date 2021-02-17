@@ -30,6 +30,7 @@ class MemoDatabaseInHive extends DatabaseInHive<MemoInHive> {
   Future<void> save(MemoInHive model) async {
     model.dateTime = DateTime.now();
     await super.save(model);
+    print("saved");
   }
 
   @override

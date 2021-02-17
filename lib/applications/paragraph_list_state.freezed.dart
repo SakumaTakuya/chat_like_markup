@@ -14,7 +14,8 @@ class _$ParagraphListStateTearOff {
   const _$ParagraphListStateTearOff();
 
 // ignore: unused_element
-  ParagraphListStateData call({List<Paragraph> paragraphs = const []}) {
+  ParagraphListStateData call(
+      {List<Paragraph> paragraphs = const [const Paragraph('')]}) {
     return ParagraphListStateData(
       paragraphs: paragraphs,
     );
@@ -108,10 +109,11 @@ class _$ParagraphListStateDataCopyWithImpl<$Res>
 class _$ParagraphListStateData
     with DiagnosticableTreeMixin
     implements ParagraphListStateData {
-  const _$ParagraphListStateData({this.paragraphs = const []})
+  const _$ParagraphListStateData(
+      {this.paragraphs = const [const Paragraph('')]})
       : assert(paragraphs != null);
 
-  @JsonKey(defaultValue: const [])
+  @JsonKey(defaultValue: const [const Paragraph('')])
   @override
   final List<Paragraph> paragraphs;
 

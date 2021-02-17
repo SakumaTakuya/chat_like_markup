@@ -18,15 +18,19 @@ class Home extends StatelessWidget {
   final DateFormat _format = DateFormat.yMEd();
 
   @override
-  Widget build(BuildContext context) => Scaffold(
-        appBar: AppBar(title: Text(AppLocalizations.of(context).home)),
-        body: _buildList(context),
-        floatingActionButton: _buildFloatingButton(context),
-      );
+  Widget build(BuildContext context) {
+    print("build func form");
+    return Scaffold(
+      appBar: AppBar(title: Text(AppLocalizations.of(context).home)),
+      body: _buildList(context),
+      floatingActionButton: _buildFloatingButton(context),
+    );
+  }
 
   Widget _buildList(BuildContext context) =>
       context.watch<MemoListState>().when(
         (memos) {
+          print('build home');
           memos.sort((a, b) => a.dateTime.compareTo(b.dateTime));
           return ListView.builder(
             itemCount: memos.length,
@@ -39,7 +43,7 @@ class Home extends StatelessWidget {
 
               return Column(
                 children: [
-                  LabelCard(_format.format(memo.dateTime)),
+                  LabelCard(_format.format(memo.dateTime ?? DateTime.now())),
                   _buildCard(context, memo),
                 ],
               );
@@ -51,7 +55,7 @@ class Home extends StatelessWidget {
 
   Widget _buildCard(BuildContext context, Memo memo) => MemoCard(
         memo,
-        onTap: () => _transitionToEdit(context, memo),
+        onTap: () async => await _transitionToEdit(context, memo),
         onDelete: () => _deleteCard(context, memo),
       );
 
@@ -59,17 +63,20 @@ class Home extends StatelessWidget {
       context.watch<MemoListState>().when(
             (_) => FloatingActionButton(
               onPressed: () async =>
-                  _transitionToEdit(context, await _createCard(context)),
+                  await _transitionToEdit(context, await _createCard(context)),
               child: Icon(Icons.add),
             ),
             loading: () => null,
           );
-  void _transitionToEdit(BuildContext context, Memo memo) => Navigator.push(
-        context,
-        CupertinoPageRoute(
-          builder: (context) => Edit(memo),
-        ),
-      );
+
+  Future<void> _transitionToEdit(BuildContext context, Memo memo) async {
+    await Navigator.push(
+      context,
+      CupertinoPageRoute(
+        builder: (context) => Edit(memo),
+      ),
+    );
+  }
 
   // void _transitionToEdit(Memo memo) {}
 

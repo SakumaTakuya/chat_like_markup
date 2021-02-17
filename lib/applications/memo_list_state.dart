@@ -80,6 +80,7 @@ class MemoListController extends StateNotifier<MemoListState>
       _save(memos, model);
 
       state = currentState.copyWith(memos: memos);
+      print('update state');
       return;
     }
 

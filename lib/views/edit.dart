@@ -59,13 +59,15 @@ class _EditPanelState extends State<EditPanel>
       child: Scaffold(
         appBar: AppBar(
           title: titleEditor,
+          leading: BackButton(),
           actions: [
             IconButton(
               icon: Icon(Icons.save),
               onPressed: () {
                 _updateWithTitle(context, titleEditor.title);
                 context.read<MemoState>().maybeWhen(
-                      (memo) => context.read<MemoListController>().save(memo),
+                      (memo) async =>
+                          await context.read<MemoListController>().save(memo),
                       orElse: () {},
                     );
               },
