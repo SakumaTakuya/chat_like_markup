@@ -1,11 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import '../../domains/paragraph.dart';
 
 typedef void MemoBlockEvent();
-typedef void MemoBlockInputEvent(String text);
+typedef void MemoBlockInputEvent(Paragraph paragraph);
 
 class MemoBlockAdder extends StatelessWidget {
-  MemoBlockAdder({this.onAdded});
+  MemoBlockAdder({Key key, this.onAdded}) : super(key: key);
   final MemoBlockEvent onAdded;
 
   @override
@@ -20,31 +21,51 @@ class MemoBlockAdder extends StatelessWidget {
 }
 
 class MemoBlock extends StatefulWidget {
-  MemoBlock({this.onAdded, this.onEndedToInput, this.text});
+  const MemoBlock(
+      {Key key,
+      this.onAdded,
+      this.onChanged,
+      this.onEndedToInput,
+      this.paragraph,
+      this.isInputState})
+      : super(key: key);
   final MemoBlockEvent onAdded;
-  final MemoBlockInputEvent onEndedToInput;
-  final String text;
+  final MemoBlockEvent onEndedToInput;
+  final MemoBlockInputEvent onChanged;
+  final Paragraph paragraph;
+  final bool isInputState;
 
   @override
-  _MemoBlockState createState() =>
-      _MemoBlockState(onAdded, onEndedToInput, text, text == null);
+  _MemoBlockState createState() {
+    print("card text : ${paragraph?.content}");
+    return _MemoBlockState(
+        onAdded, onChanged, onEndedToInput, paragraph?.content, isInputState);
+  }
 }
 
 class _MemoBlockState extends State<MemoBlock> {
   _MemoBlockState(
-      this.onAdded, this.onEndedToInput, String text, this.isInputState)
-      : _textEditingController = TextEditingController(text: text ?? '');
+    this.onAdded,
+    this.onChanged,
+    this.onEndedToInput,
+    this._text,
+    this.isInputState,
+  ) : _textEditingController = TextEditingController(text: _text ?? '');
   final MemoBlockEvent onAdded;
-  final MemoBlockInputEvent onEndedToInput;
+  final MemoBlockEvent onEndedToInput;
+  final MemoBlockInputEvent onChanged;
+  String _text;
 
   bool isInputState;
   TextEditingController _textEditingController;
 
   @override
-  Widget build(BuildContext context) => Card(
-        child:
-            isInputState ? _buildInputState(context) : _buildTileState(context),
-      );
+  Widget build(BuildContext context) {
+    return Card(
+      child:
+          isInputState ? _buildInputState(context) : _buildTileState(context),
+    );
+  }
 
   Widget _buildTileState(BuildContext context) => InkWell(
         child: Container(
@@ -67,35 +88,28 @@ class _MemoBlockState extends State<MemoBlock> {
       );
 
   Widget _buildInputState(BuildContext context) => Container(
-      color: Theme.of(context).colorScheme.primaryVariant,
-      padding: EdgeInsets.all(
-        Theme.of(context).textTheme.bodyText1.fontSize / 2,
-      ),
-      child: GestureDetector(
-        onTap: _unfocus,
+        color: Theme.of(context).colorScheme.primaryVariant,
+        padding: EdgeInsets.all(
+          Theme.of(context).textTheme.bodyText1.fontSize / 2,
+        ),
         child: TextField(
           autofocus: true,
           maxLines: null,
           keyboardType: TextInputType.multiline,
           onChanged: (value) {
-            if (_isEndParagraph(value)) {
-              onEndedToInput(value);
-              setState(() => isInputState = false);
+            final paragraph = Paragraph(value);
+            onChanged(paragraph);
+
+            if (!paragraph.isEnd) {
+              return;
             }
+
+            _textEditingController.text = paragraph.content;
+            setState(() => isInputState = false);
+            Focus.of(context).unfocus();
+            onEndedToInput();
           },
           controller: _textEditingController,
         ),
-      ));
-
-  bool _isEndParagraph(String text) => text.endsWith('\n\n');
-  void _unfocus() {
-    print('unfocus');
-    // final FocusScopeNode currentScope = FocusScope.of(context);
-    // FocusManager.instance.primaryFocus.unfocus();
-    // setState(() => isInputState = false);
-    // if (!currentScope.hasPrimaryFocus && currentScope.hasFocus) {
-    //   FocusManager.instance.primaryFocus.unfocus();
-    //   setState(() => isInputState = false);
-    // }
-  }
+      );
 }

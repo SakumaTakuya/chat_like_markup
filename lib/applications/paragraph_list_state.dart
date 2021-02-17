@@ -10,7 +10,7 @@ part 'paragraph_list_state.freezed.dart';
 @freezed
 abstract class ParagraphListState with _$ParagraphListState {
   const factory ParagraphListState({
-    @Default([]) List<Paragraph> paragraphs,
+    @Default([Paragraph('')]) List<Paragraph> paragraphs,
   }) = ParagraphListStateData;
   const factory ParagraphListState.loading() = ParagraphListStateLoading;
 }
@@ -18,11 +18,6 @@ abstract class ParagraphListState with _$ParagraphListState {
 class ParagraphsController extends StateNotifier<ParagraphListState>
     with LocatorMixin {
   ParagraphsController() : super(const ParagraphListState.loading());
-
-  @override
-  Future<void> initState() async {
-    super.initState();
-  }
 
   Future<void> buildParagraphs(Memo memo) async {
     final paragraphs = memo.splitIntoParagraphs();
@@ -43,6 +38,21 @@ class ParagraphsController extends StateNotifier<ParagraphListState>
       final paragraphs = currentState.paragraphs.toList()
         ..insert(index, paragraph);
       state = currentState.copyWith(paragraphs: paragraphs);
+    }
+  }
+
+  void move(int oldIndex, int newIndex) {
+    final currentState = state;
+    if (currentState is ParagraphListStateData) {
+      final paragraphs = currentState.paragraphs.toList();
+      final item = paragraphs.removeAt(oldIndex);
+      paragraphs.insert(newIndex, item);
+
+      state = currentState.copyWith(paragraphs: paragraphs);
+      final sta = state;
+      if (sta is ParagraphListStateData) {
+        print("to ${sta.paragraphs.map((e) => e?.content).join('\t')}");
+      }
     }
   }
 }

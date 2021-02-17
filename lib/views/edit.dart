@@ -51,14 +51,11 @@ class _EditPanelState extends State<EditPanel>
 
   @override
   Widget build(BuildContext context) {
-    final titleEditor = context.watch<MemoState>().when<Widget>(
-          (memo) => TitleEditor(title: memo.title),
-          loading: () => Text('loading...'),
-        );
+    final titleEditor = TitleEditor();
 
     return GestureDetector(
       behavior: HitTestBehavior.translucent,
-      onTap: () => FocusScope.of(context).unfocus(),
+      onTap: FocusScope.of(context).unfocus,
       child: Scaffold(
         appBar: AppBar(
           title: titleEditor,
@@ -66,9 +63,7 @@ class _EditPanelState extends State<EditPanel>
             IconButton(
               icon: Icon(Icons.save),
               onPressed: () {
-                if (titleEditor is TitleEditor) {
-                  _updateWithTitle(context, titleEditor.title);
-                }
+                _updateWithTitle(context, titleEditor.title);
                 context.read<MemoState>().maybeWhen(
                       (memo) => context.read<MemoListController>().save(memo),
                       orElse: () {},
@@ -80,17 +75,16 @@ class _EditPanelState extends State<EditPanel>
             controller: _tabController,
             tabs: _tabs,
             onTap: (index) {
+              FocusScope.of(context).unfocus();
               if (index == 0) {
                 return;
               }
-              FocusScope.of(context).unfocus();
-              if (titleEditor is TitleEditor) {
-                _updateWithTitle(context, titleEditor.title);
-              }
+              _updateWithTitle(context, titleEditor.title);
             },
           ),
         ),
         body: TabBarView(
+          physics: NeverScrollableScrollPhysics(),
           controller: _tabController,
           children: [
             MarkdownEditor(),
