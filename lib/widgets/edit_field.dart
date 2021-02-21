@@ -7,7 +7,13 @@ typedef void SaveCallback(String text);
 typedef void EditCallback();
 
 class EditField extends StatelessWidget {
-  EditField({this.controller, this.onSave, this.onEdit});
+  EditField({
+    @required this.controller,
+    @required this.onSave,
+    @required this.onEdit,
+  })  : assert(controller != null),
+        assert(onSave != null),
+        assert(onEdit != null);
   final TextEditingController controller;
   final SaveCallback onSave;
   final EditCallback onEdit;

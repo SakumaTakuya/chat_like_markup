@@ -11,7 +11,10 @@ class ListWithHead<T> {
 }
 
 extension ListWithHeadMethod<T> on ListWithHead<T> {
-  int get head => max(0, min(_head, content.length - 1));
+  int get head {
+    _head = max(0, min(_head, content.length - 1));
+    return _head;
+  }
 
   T get current => content[head];
 }

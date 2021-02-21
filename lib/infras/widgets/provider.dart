@@ -6,13 +6,14 @@ import 'package:provider/provider.dart';
 
 class NotifierProvider<T extends StateNotifier<U>, U> extends StatelessWidget {
   const NotifierProvider(
-      {@required this.childbuilder, @required this.notifier});
+      {@required this.childbuilder, @required this.notifierbuilder})
+      : assert(notifierbuilder != null);
   final Create<Widget> childbuilder;
-  final T notifier;
+  final Create<T> notifierbuilder;
 
   @override
-  Widget build(BuildContext context) => StateNotifierProvider<T, U>.value(
-        value: notifier,
+  Widget build(BuildContext context) => StateNotifierProvider<T, U>(
+        create: notifierbuilder,
         child: Builder(
           builder: childbuilder,
         ),

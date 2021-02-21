@@ -1,9 +1,10 @@
-import '../domains/model.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+
+import '../domains/model.dart';
 import '../domains/memo.dart';
 import '../domains/paragraph.dart';
 import '../domains/list_with_head.dart';
-import '../domains/paragraphs_memo_converter.dart';
 import 'package:state_notifier/state_notifier.dart';
 
 part 'editing_memo.freezed.dart';
@@ -29,12 +30,14 @@ class EditingMemoController extends StateNotifier<EditingMemoState>
       title: memo.title,
       sentence: ListWithHead(creater.create(memo.text), 0),
     );
+    debugPrint('initialize editing memo state with $memo');
   }
 
   void updateTitle(String title) {
     final currentState = state;
     if (currentState is EditingMemoStateData) {
-      currentState.copyWith(title: title);
+      state = currentState.copyWith(title: title);
+      debugPrint('update title ($title)');
     }
   }
 
@@ -46,6 +49,7 @@ class EditingMemoController extends StateNotifier<EditingMemoState>
         ..key = currentState.key
         ..title = currentState.title
         ..text = currentState.sentence.content.makeSentence();
+      debugPrint('build $memo');
     }
     return memo;
   }
@@ -60,6 +64,7 @@ class EditingMemoController extends StateNotifier<EditingMemoState>
 
       sentence.insert(head, item);
       state = currentState.copyWith(sentence: ListWithHead(sentence, head));
+      debugPrint('bring $item from $fromIndex to $head');
     }
   }
 
@@ -72,6 +77,7 @@ class EditingMemoController extends StateNotifier<EditingMemoState>
         ..insert(head, value);
 
       state = currentState.copyWith(sentence: ListWithHead(sentence, head));
+      debugPrint('rewrite item at $head');
     }
   }
 
@@ -83,6 +89,7 @@ class EditingMemoController extends StateNotifier<EditingMemoState>
       final sentence = currentState.sentence.content.toList()..[head] = value;
 
       state = currentState.copyWith(sentence: ListWithHead(sentence, head));
+      debugPrint('rewrite item at $head');
     }
   }
 
@@ -90,9 +97,9 @@ class EditingMemoController extends StateNotifier<EditingMemoState>
   void seek(int head) {
     final currentState = state;
     if (currentState is EditingMemoStateData) {
-      final head = currentState.sentence.head;
       final sentence = currentState.sentence.content.toList();
       state = currentState.copyWith(sentence: ListWithHead(sentence, head));
+      debugPrint('seek to $head (length ${sentence.length})');
     }
   }
 
@@ -100,14 +107,17 @@ class EditingMemoController extends StateNotifier<EditingMemoState>
   void seekNextOrNew({Paragraph newItem}) {
     final currentState = state;
     if (currentState is EditingMemoStateData) {
-      final head = currentState.sentence.head;
+      final head = currentState.sentence.head + 1;
       final sentence = currentState.sentence.content.toList();
 
       if (head >= sentence.length && newItem != null) {
         sentence.add(newItem);
+        debugPrint('insert new item $newItem');
+      } else {
+        debugPrint('seek to $head (length ${sentence.length})');
       }
 
-      state = currentState.copyWith(sentence: ListWithHead(sentence, head + 1));
+      state = currentState.copyWith(sentence: ListWithHead(sentence, head));
     }
   }
 }

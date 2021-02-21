@@ -1,35 +1,19 @@
-class Paragraph {
-  const Paragraph(this._content);
-  final String _content;
+import 'package:flutter/cupertino.dart';
 
-  String get separator => '';
-
-  bool get isEnd => _content.endsWith(separator);
-  String get content => _content.splitMapJoin(
-        RegExp(r'\n{2,}'),
-        onMatch: (m) => '\n',
-        onNonMatch: (n) => n,
-      );
-}
-
-class MarkdownParagraph implements Paragraph {
-  const MarkdownParagraph(this._content);
-  final String _content;
-
-  @override
-  String get separator => '\n\n';
-
-  @override
-  bool get isEnd => _content.endsWith(separator);
-
-  @override
-  String get content => _content.splitMapJoin(
-        RegExp(r'\n{2,}'),
-        onMatch: (m) => '\n',
-        onNonMatch: (n) => n,
-      );
+abstract class Paragraph {
+  @protected
+  String get raw;
+  String get separator;
+  String get content;
 }
 
 abstract class ParagraphCreater<P extends Paragraph> {
   List<P> create([String text]);
+}
+
+extension SentenceMaker<P extends Paragraph> on List<P> {
+  String makeSentence() => fold(
+        '',
+        (prev, para) => '$prev${para.content}${para.separator}',
+      );
 }

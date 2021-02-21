@@ -48,7 +48,10 @@ class _ParagraphListState extends State<ParagraphList> {
             color: widget.sentence.head == index
                 ? Theme.of(context).colorScheme.primaryVariant
                 : Theme.of(context).cardColor,
-            onTap: () => widget.onSelect(index),
+            onTap: () {
+              widget.onSelect(index);
+              debugPrint('select $index');
+            },
             onAdded: () => widget.onInsert(index),
           ),
         ),

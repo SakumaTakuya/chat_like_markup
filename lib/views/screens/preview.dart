@@ -6,8 +6,5 @@ class PreviewScreen extends StatelessWidget {
   final String text;
 
   @override
-  Widget build(BuildContext context) {
-    // TODO: implement build
-    throw UnimplementedError();
-  }
+  Widget build(BuildContext context) => Text(text);
 }

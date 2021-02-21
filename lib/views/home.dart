@@ -1,93 +1,57 @@
-import 'package:chat_like_markup/domains/memo.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:intl/intl.dart';
-import 'package:provider/provider.dart';
-import '../applications/memo_list_state.dart';
+import '../states/memo_list.dart';
 import '../domains/model.dart';
 import '../domains/memo.dart';
-import '../domains/date_comparator.dart';
-import 'widgets/memo_card.dart';
-import 'widgets/label_card.dart';
-import 'edit.dart';
+import '../infras/widgets/provider.dart';
+import '../widgets/memo_list.dart';
 
-class Home extends StatelessWidget {
-  Home(this._creater);
+class HomeView extends StatelessWidget {
+  HomeView(this._creater, this._deleter, this._saver);
   final ModelCreater<Memo> _creater;
-  final DateFormat _format = DateFormat.yMEd();
+  final ModelDeleter<Memo> _deleter;
+  final ModelSaver<Memo> _saver;
 
   @override
-  Widget build(BuildContext context) {
-    print("build func form");
-    return Scaffold(
-      appBar: AppBar(title: Text(AppLocalizations.of(context).home)),
-      body: _buildList(context),
-      floatingActionButton: _buildFloatingButton(context),
-    );
-  }
-
-  Widget _buildList(BuildContext context) =>
-      context.watch<MemoListState>().when(
-        (memos) {
-          print('build home');
-          memos.sort((a, b) => a.dateTime.compareTo(b.dateTime));
-          return ListView.builder(
-            itemCount: memos.length,
-            itemBuilder: (context, index) {
-              final memo = memos[index];
-
-              if (index > 0 && memo.isPostedSameDay(memos[index - 1])) {
-                return _buildCard(context, memo);
-              }
-
-              return Column(
-                children: [
-                  LabelCard(_format.format(memo.dateTime ?? DateTime.now())),
-                  _buildCard(context, memo),
-                ],
-              );
-            },
-          );
-        },
-        loading: () => const Center(child: CircularProgressIndicator()),
-      );
-
-  Widget _buildCard(BuildContext context, Memo memo) => MemoCard(
-        memo,
-        onTap: () async => await _transitionToEdit(context, memo),
-        onDelete: () => _deleteCard(context, memo),
-      );
-
-  Widget _buildFloatingButton(BuildContext context) =>
-      context.watch<MemoListState>().when(
+  Widget build(BuildContext context) => Scaffold(
+        appBar: AppBar(title: Text(AppLocalizations.of(context).home)),
+        body: Watcher<MemoListState>(
+          childbuilder: (_, data) => data.maybeWhen(
+            (memos) => MemoList(
+              memos,
+              onSelect: (memo) async => await _transitionToEdit(context, memo),
+              onDelete: (memo) => _deleteCard(context, memo),
+            ),
+            orElse: () => const Center(child: CircularProgressIndicator()),
+          ),
+        ),
+        floatingActionButton: Watcher<MemoListState>(
+          childbuilder: (context, data) => data.maybeWhen(
             (_) => FloatingActionButton(
-              onPressed: () async =>
-                  await _transitionToEdit(context, await _createCard(context)),
+              onPressed: () async => await _transitionToEdit(
+                context,
+                await _createCard(context),
+              ),
               child: Icon(Icons.add),
             ),
-            loading: () => null,
-          );
+            orElse: () => Container(),
+          ),
+        ),
+      );
 
   Future<void> _transitionToEdit(BuildContext context, Memo memo) async {
-    await Navigator.push(
-      context,
-      CupertinoPageRoute(
-        builder: (context) => Edit(memo),
-      ),
-    );
+    await Navigator.pushNamed(context, '/edit', arguments: memo);
   }
-
-  // void _transitionToEdit(Memo memo) {}
 
   Future<Memo> _createCard(BuildContext context) async {
     final memo = _creater.create();
-    await context.read<MemoListController>().save(memo);
+    await _saver.save(memo);
     return memo;
   }
 
   void _deleteCard(BuildContext context, Memo memo) {
-    context.read<MemoListController>().delete(memo);
+    _deleter.delete(memo);
     Scaffold.of(context).showSnackBar(
       SnackBar(
         content: Text(AppLocalizations.of(context).delete),

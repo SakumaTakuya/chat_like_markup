@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import '../domains/list_with_head.dart';
-import '../domains/paragraph.dart';
-import '../widgets/paragraph_list.dart';
-import '../widgets/edit_field.dart';
+import '../../domains/list_with_head.dart';
+import '../../domains/paragraph.dart';
+import '../../widgets/paragraph_list.dart';
+import '../../widgets/edit_field.dart';
 
 class EditScreen extends StatefulWidget {
   EditScreen(
@@ -23,9 +23,17 @@ class _EditScreenState extends State<EditScreen> {
   TextEditingController _controller;
 
   @override
+  void initState() {
+    super.initState();
+    _controller = TextEditingController(text: widget.sentence.current.content);
+  }
+
+  @override
   void didUpdateWidget(covariant EditScreen oldWidget) {
     super.didUpdateWidget(oldWidget);
-    _controller = TextEditingController(text: widget.sentence.current.content);
+    if (widget != oldWidget) {
+      _controller.text = widget.sentence.current.content;
+    }
   }
 
   @override
@@ -55,11 +63,12 @@ class _EditScreenState extends State<EditScreen> {
           EditField(
             controller: _controller,
             onSave: (text) {
-              widget.creater.create(text).forEach(
-                  (paragraph) => widget.headoperator.rewrite(paragraph));
-              widget.headoperator.seekNextOrNew(
-                newItem: widget.creater.create().first,
-              );
+              for (var item in widget.creater.create(text)) {
+                widget.headoperator.rewrite(item);
+                widget.headoperator.seekNextOrNew(
+                  newItem: widget.creater.create().first,
+                );
+              }
             },
             onEdit: () {
               //TODO: implement scroll

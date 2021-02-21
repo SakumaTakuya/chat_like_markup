@@ -54,9 +54,11 @@ class MemoListController extends StateNotifier<MemoListState>
     super.initState();
 
     // await Future<void>.delayed(const Duration(microseconds: 500));
+    print('start initialize');
 
     final memos = _searcher.searchAll()?.toList() ?? [];
     state = MemoListState(memos: memos);
+    print('initialized');
   }
 
   void delete(Memo model) {

@@ -1,47 +1,72 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_state_notifier/flutter_state_notifier.dart';
-import 'package:hive/hive.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'applications/memo_list_state.dart';
+import 'domains/markdown_paragraph.dart';
 import 'infras/memo_data.dart';
+import 'infras/hive_initializer.dart';
+import 'infras/widgets/provider.dart';
+import 'states/memo_list.dart';
 import 'views/home.dart';
+import 'views/edit.dart';
 import 'views/theme.dart';
 
+const isDebug = true;
+
 Future<void> main() async {
-  final database = await initDatabase();
+  final database = await initDatabase(isDebug);
   runApp(MyApp(database));
 }
 
-Future<MemoDatabaseInHive> initDatabase() async {
+Future<MemoDatabaseInHive> initDatabase(bool isDebug) async {
   final database = MemoDatabaseInHive();
-  await Hive.initFlutter();
-  Hive.registerAdapter(MemoInHiveAdapter());
-  await database.open();
-  await database.box.deleteFromDisk();
+  await HiveInitializer.initialize();
+
+  if (isDebug) {
+    await database.open();
+    await database.box.deleteFromDisk();
+  }
+
   await database.open();
   return database;
 }
 
 class MyApp extends StatelessWidget {
-  MyApp(this._database);
-  final MemoDatabaseInHive _database;
+  MyApp(this.database);
+  final MemoDatabaseInHive database;
 
   @override
   Widget build(BuildContext context) =>
-      StateNotifierProvider<MemoListController, MemoListState>(
-        create: (_) => MemoListController(
-          _database,
-          _database,
-          _database,
-        ),
-        child: MaterialApp(
+      NotifierProvider<MemoListController, MemoListState>(
+        childbuilder: (context) => MaterialApp(
           title: 'Chat Like Memo',
-          home: Home(_database),
           theme: CustomTheme.lightTheme,
           localizationsDelegates: AppLocalizations.localizationsDelegates,
           supportedLocales: AppLocalizations.supportedLocales,
+          initialRoute: '/',
+          onGenerateRoute: (settings) {
+            final controller = Reader.of<MemoListController>(context);
+            final routes = {
+              '/': (_) => HomeView(
+                    database,
+                    controller,
+                    controller,
+                  ),
+              '/edit': (_) => EditView(
+                    settings.arguments,
+                    database,
+                    controller,
+                    MarkdownParagraphCreater(),
+                  ),
+            };
+            final builder = routes[settings.name];
+            return CupertinoPageRoute(
+                builder: (c) => builder(c), settings: settings);
+          },
+        ),
+        notifierbuilder: (_) => MemoListController(
+          database,
+          database,
+          database,
         ),
       );
 }
