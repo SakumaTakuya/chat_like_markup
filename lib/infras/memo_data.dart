@@ -21,20 +21,34 @@ class MemoInHive implements Memo {
   @override
   @HiveField(3)
   String title;
+
+  @override
+  String toString() {
+    return '$key [$title] $text ($dateTime)';
+  }
 }
 
-class MemoDatabaseInHive extends DatabaseInHive<MemoInHive> {
+class MemoDatabaseInHive extends DatabaseInHive<Memo> {
   MemoDatabaseInHive() : super('memo');
 
   @override
-  Future<void> save(MemoInHive model) async {
-    model.dateTime = DateTime.now();
-    await super.save(model);
+  Future<void> save(Memo model) async {
+    final forSaving = MemoInHive()
+      ..key = model.key
+      ..dateTime = DateTime.now()
+      ..title = model.title
+      ..text = model.text;
+    await super.save(forSaving);
+
+    model
+      ..key = forSaving.key
+      ..dateTime = forSaving.dateTime;
+
     print("saved");
   }
 
   @override
-  MemoInHive create() => MemoInHive()
+  Memo create() => MemoInHive()
     ..dateTime = DateTime.now()
     ..title = ''
     ..text = '';

@@ -38,25 +38,21 @@ Future<void> main() async {
       expect(data.text, isNot(equals(null)));
     });
 
-    test('data has key only after saving', () {
+    test('data has key only after saving', () async {
       final data = database.create();
 
       expect(data.key, null);
-      expect(
-        database.save(data),
-        completion(predicate((_) => data.key == 0)),
-      );
+      await database.save(data);
+      expect(data.key, 0);
     });
 
-    test('data is set datetime when saving', () {
+    test('data is set datetime when saving', () async {
       final fromDate = DateTime.fromMicrosecondsSinceEpoch(10);
       final data = database.create()..dateTime = fromDate;
 
       expect(data.dateTime, fromDate);
-      expect(
-        database.save(data),
-        completion(predicate((_) => data.dateTime != fromDate)),
-      );
+      await database.save(data);
+      expect(data.dateTime, isNot(equals(fromDate)));
     });
 
     test('search data corresponding to the key', () {
@@ -76,60 +72,56 @@ Future<void> main() async {
       );
     });
 
-    test('search all data if arguments is null', () {
+    test('search all data if arguments is null', () async {
       final datas = List.generate(
           5,
           (i) => database.create()
             ..title = 'title$i'
             ..text = 'text$i');
 
-      final future = Future(() async {
-        for (var data in datas) {
-          await database.save(data);
-        }
-        return database.searchAll();
-      });
+      for (var data in datas) {
+        await database.save(data);
+      }
 
-      expect(future, completion(unorderedEquals(datas)));
+      expect(
+        database.searchAll().map((e) => e.key),
+        unorderedEquals(datas.map((e) => e.key)),
+      );
     });
 
-    test('search data satisfied the condition', () {
+    test('search data satisfied the condition', () async {
       final datas = List.generate(
           5,
           (i) => database.create()
             ..title = 'title$i'
             ..text = 'text$i');
 
-      final future = Future(() async {
-        for (var data in datas) {
-          await database.save(data);
-        }
-        for (var data in datas) {
-          await database.save(data);
-        }
-        return database.searchAll(query: (d) => d.key < 6);
-      });
+      for (var data in datas) {
+        await database.save(data);
+      }
 
-      expect(future, completion(unorderedEquals(datas)));
+      final searched = database.searchAll(query: (d) => d.key < 2);
+      expect(
+        searched.map((e) => e.key).toList(),
+        unorderedEquals([0, 1]),
+      );
     });
 
-    test('delete target data', () {
+    test('delete target data', () async {
       final datas = List.generate(
           5,
           (i) => database.create()
             ..title = 'title$i'
             ..text = 'text$i');
 
-      final future = Future(() async {
-        for (var data in datas) {
-          await database.save(data);
-        }
+      for (var data in datas) {
+        await database.save(data);
+      }
 
-        database.delete(datas[0]);
-        return database.search(0);
-      });
+      database.delete(datas[0]);
+      final searched = database.search(0);
 
-      expect(future, completion(equals(null)));
+      expect(searched, null);
     });
 
     test('there are no errors if data is null', () {
