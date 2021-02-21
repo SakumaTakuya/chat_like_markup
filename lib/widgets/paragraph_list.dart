@@ -6,17 +6,18 @@ import 'paragraph_card.dart';
 
 typedef void SelectCallback(int index);
 typedef void ReorderCallback(int oldIndex, int newIndex);
+typedef bool ConfirmDeleteCallback(int index);
 
 class ParagraphList extends StatefulWidget {
   ParagraphList(
     this.sentence, {
     this.onSelect,
-    this.onInsert,
+    this.confirmDismiss,
     this.onReorder,
   }) : _state = _ParagraphListState();
   final ListWithHead<Paragraph> sentence;
   final SelectCallback onSelect;
-  final SelectCallback onInsert;
+  final ConfirmDeleteCallback confirmDismiss;
   final ReorderCallback onReorder;
   final _ParagraphListState _state;
 
@@ -52,7 +53,7 @@ class _ParagraphListState extends State<ParagraphList> {
               widget.onSelect(index);
               debugPrint('select $index');
             },
-            onAdded: () => widget.onInsert(index),
+            confirmDismiss: () => widget.confirmDismiss(index),
           ),
         ),
         onReorder: widget.onReorder,

@@ -6,6 +6,10 @@ import 'generals/scrollable_container.dart';
 typedef void SaveCallback(String text);
 typedef void EditCallback();
 
+const tableString = '|    |    |\n'
+    '|----|----|\n'
+    '|    |    |';
+
 class EditField extends StatelessWidget {
   EditField({
     @required this.controller,
@@ -36,7 +40,11 @@ class EditField extends StatelessWidget {
           children: [
             ScrollableContainer(
               child: FocusibleTextField(
-                onUnfocus: () => onSave(controller.text),
+                onUnfocus: () {
+                  if (controller.text.isNotEmpty) {
+                    onSave(controller.text);
+                  }
+                },
                 onFocus: onEdit,
                 controller: controller,
               ),
@@ -44,8 +52,25 @@ class EditField extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
+                Expanded(
+                  child: Row(
+                    children: [
+                      IconButton(
+                          icon: const Icon(Icons.space_bar),
+                          onPressed: () {
+                            controller.text += "\t";
+                            controller.selection = TextSelection.fromPosition(
+                                TextPosition(offset: controller.text.length));
+                          }),
+                      IconButton(
+                        icon: const Icon(Icons.table_view),
+                        onPressed: () => controller.text += tableString,
+                      )
+                    ],
+                  ),
+                ),
                 IconButton(
-                  icon: Icon(Icons.check),
+                  icon: const Icon(Icons.check),
                   onPressed: () => onSave(controller.text),
                 ),
               ],

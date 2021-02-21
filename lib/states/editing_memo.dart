@@ -120,4 +120,17 @@ class EditingMemoController extends StateNotifier<EditingMemoState>
       state = currentState.copyWith(sentence: ListWithHead(sentence, head));
     }
   }
+
+  @override
+  void remove() {
+    final currentState = state;
+    if (currentState is EditingMemoStateData) {
+      final head = currentState.sentence.head;
+      final sentence = currentState.sentence.content.toList();
+      sentence.removeAt(head);
+      state = currentState.copyWith(sentence: ListWithHead(sentence, head));
+      debugPrint('remove at $head');
+    
+    }
+  }
 }

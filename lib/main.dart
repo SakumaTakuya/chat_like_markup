@@ -10,7 +10,7 @@ import 'views/home.dart';
 import 'views/edit.dart';
 import 'views/theme.dart';
 
-const isDebug = true;
+const isDebug = false;
 
 Future<void> main() async {
   final database = await initDatabase(isDebug);
@@ -40,6 +40,7 @@ class MyApp extends StatelessWidget {
         childbuilder: (context) => MaterialApp(
           title: 'Chat Like Memo',
           theme: CustomTheme.lightTheme,
+          debugShowCheckedModeBanner: isDebug,
           localizationsDelegates: AppLocalizations.localizationsDelegates,
           supportedLocales: AppLocalizations.supportedLocales,
           initialRoute: '/',

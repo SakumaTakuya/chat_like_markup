@@ -47,6 +47,7 @@ class MemoCard extends StatelessWidget {
             subtitle: Text(
               _memo.text,
               overflow: TextOverflow.ellipsis,
+              maxLines: 1,
             ),
             trailing: IconButton(
               icon: const Icon(Icons.copy),

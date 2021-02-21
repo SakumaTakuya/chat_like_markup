@@ -45,10 +45,17 @@ class _EditScreenState extends State<EditScreen> {
               onSelect: (index) {
                 widget.headoperator.seek(index);
               },
-              onInsert: (index) {
-                widget.headoperator.seek(index + 1);
+              confirmDismiss: (index) {
+                if (index == widget.sentence.content.length - 1) {
+                  return false;
+                }
 
-                widget.headoperator.insert(widget.creater.create().first);
+                widget.headoperator.seek(index);
+                widget.headoperator.remove();
+
+                return true;
+
+                // widget.headoperator.insert(widget.creater.create().first);
               },
               onReorder: (oldIndex, newIndex) {
                 if (newIndex > oldIndex) {

@@ -25,4 +25,5 @@ abstract class HeadOperator<T> {
   void rewrite(T value);
   void bring(int fromIndex);
   void seekNextOrNew({T newItem});
+  void remove();
 }
