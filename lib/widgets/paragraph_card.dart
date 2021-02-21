@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import '../infras/widgets/markdown.dart';
 
 typedef void ParagraphCardCallback();
 
@@ -27,11 +28,11 @@ class ParagraphCard extends StatelessWidget {
             padding: const EdgeInsets.all(8.0),
             child: Row(
               children: [
-                Expanded(child: Text(text)),
-                IconButton(
-                  padding: const EdgeInsets.all(0.0),
-                  icon: const Icon(Icons.arrow_circle_down),
-                  onPressed: onAdded,
+                Expanded(
+                  child: TextFromMarkdown(
+                    text,
+                    physics: NeverScrollableScrollPhysics(),
+                  ),
                 ),
               ],
             ),
